@@ -699,12 +699,12 @@ table.atbl tbody td {
     <div class="card-body">
       <div class="work-list">
 
-        <!-- 업무 1 (펼침) -->
+        <!-- 업무 1 (부서 선택 시 자동 채움) -->
         <div class="work-item">
           <div class="work-head">
             <span class="work-num">업무 1</span>
-            <span class="work-head-name">주일예배 준비</span>
-            <span class="work-head-cycle">매주</span>
+            <span class="work-head-name" style="color:rgba(255,255,255,0.4)">위에서 부서/팀을 먼저 선택해 주세요</span>
+            <span class="work-head-cycle"></span>
             <button class="work-del-btn">삭제</button>
             <span class="work-chevron">▲</span>
           </div>
@@ -712,13 +712,14 @@ table.atbl tbody td {
             <div class="work-row2">
               <div class="field">
                 <label>업무 명칭 <span class="req">*</span></label>
-                <input type="text" value="주일예배 준비">
+                <input type="text" placeholder="예) 주일예배 준비">
               </div>
               <div class="field">
                 <label>주기 <span class="req">*</span></label>
                 <div class="sel-wrap">
                   <select>
-                    <option selected>매주</option>
+                    <option value="" disabled selected>선택</option>
+                    <option>매주</option>
                     <option>매월</option>
                     <option>분기</option>
                     <option>연간</option>
@@ -729,17 +730,15 @@ table.atbl tbody td {
             </div>
             <div class="field">
               <label>업무 범위 <span class="req">*</span></label>
-              <textarea>음향·영상 설비 점검, 헌금봉투 준비, 안내위원 배치 및 역할 교육</textarea>
+              <textarea placeholder="담당하는 업무의 범위를 입력해주세요"></textarea>
             </div>
             <div class="field">
               <label>관리 내용 <span class="req">*</span></label>
-              <textarea>주보 인쇄 및 배포, 예배 순서 확인, 헌금 집계 및 전달</textarea>
+              <textarea placeholder="정기적으로 관리하는 내용을 입력해주세요"></textarea>
             </div>
             <div class="field">
               <label>협력 부서/팀 <span class="opt">복수 선택</span></label>
               <div class="tag-field">
-                <span class="tag">문서사역팀 <span class="tag-x">✕</span></span>
-                <span class="tag">찬양팀 <span class="tag-x">✕</span></span>
                 <span class="tag-ph">+ 추가</span>
               </div>
             </div>
@@ -747,9 +746,9 @@ table.atbl tbody td {
               <label>필요 예산 <span class="opt">선택</span></label>
               <div class="budget-rows">
                 <div class="budget-row">
-                  <input type="text" placeholder="항목명" value="주보 인쇄비">
+                  <input type="text" placeholder="항목명">
                   <div class="bdash">—</div>
-                  <input type="text" placeholder="금액" value="월 15,000원">
+                  <input type="text" placeholder="금액">
                   <button class="del-btn">✕</button>
                 </div>
               </div>
@@ -870,6 +869,226 @@ table.atbl tbody td {
 // 부서/팀 선택 시 직분 동적 변경
 const 부서목록 = ['예배부','재정부','새가족부','교육부','친교봉사부','시설관리부','환경미화부','경조사부'];
 const 직분맵 = { '성가대': ['대장','지휘자','총무'] };
+
+// ── 부서·팀별 기본업무 데이터 ───────────────────────────────────────────────
+const 기본업무맵 = {
+  '예배부': {
+    title: '주일예배 준비',
+    cycle: '매주',
+    scope: '음향·영상 설비 점검, 헌금봉투 준비, 안내위원 배치 및 역할 교육',
+    manage: '주보 인쇄 및 배포, 예배 순서 확인, 헌금 집계 및 전달',
+    collab: ['문서사역팀','찬양팀'],
+    budget: [{ name:'주보 인쇄비', amount:'월 15,000원' }]
+  },
+  '재정부': {
+    title: '헌금 수납 및 정산',
+    cycle: '매주',
+    scope: '주일 헌금 수납, 헌금 종류별 분류(십일조·감사·기관), 봉투 기재 확인',
+    manage: '헌금 집계표 작성, 은행 입금 처리, 재정 보고서 월례 제출',
+    collab: ['예배부'],
+    budget: [{ name:'사무용 소모품', amount:'분기 10,000원' }]
+  },
+  '새가족부': {
+    title: '새가족 등록 및 정착 관리',
+    cycle: '매주',
+    scope: '새신자 등록 카드 작성, 담당 목사·구역장 연결, 첫 방문 안내',
+    manage: '정착 현황 주간 업데이트, 3개월 추적 관리, 소그룹 연계',
+    collab: ['친교봉사부','예배부'],
+    budget: [{ name:'새가족 선물', amount:'월 30,000원' }]
+  },
+  '교육부': {
+    title: '주일학교 운영',
+    cycle: '매주',
+    scope: '영·유아부~고등부 부서별 교사 배치, 공과 교재 준비, 출석 관리',
+    manage: '교사 모임 월 1회 진행, 교육 계획서 연간 수립, 여름·겨울 캠프 기획',
+    collab: ['문화사역팀','찬양팀'],
+    budget: [{ name:'공과 교재비', amount:'분기 80,000원' }, { name:'교사 교육비', amount:'연간 150,000원' }]
+  },
+  '친교봉사부': {
+    title: '주일 식사 준비 및 봉사',
+    cycle: '매주',
+    scope: '식단 계획, 식재료 구입, 조리 및 배식 준비, 식당 환경 세팅',
+    manage: '식사 봉사자 일정 관리, 식재료 재고 현황, 위생 점검',
+    collab: ['시설관리부','예배부'],
+    budget: [{ name:'식재료비', amount:'월 200,000원' }, { name:'소모품', amount:'월 20,000원' }]
+  },
+  '시설관리부': {
+    title: '교회 시설 정기 점검',
+    cycle: '매월',
+    scope: '전기·소방·냉난방 설비 점검, 시설 이상 여부 확인, 긴급 수리 접수',
+    manage: '점검 일지 작성, 업체 계약 관리, 연간 시설 유지보수 계획 수립',
+    collab: ['환경미화부'],
+    budget: [{ name:'유지보수비', amount:'월 50,000원' }, { name:'소모 자재', amount:'수시' }]
+  },
+  '환경미화부': {
+    title: '교회 내·외부 청소 및 정돈',
+    cycle: '매주',
+    scope: '예배당·교육관·화장실·현관 청소, 분리수거, 계절별 대청소 진행',
+    manage: '청소 구역 담당자 지정, 청소 용품 재고 관리, 청결 상태 점검',
+    collab: ['시설관리부'],
+    budget: [{ name:'청소 용품비', amount:'월 30,000원' }]
+  },
+  '경조사부': {
+    title: '경조사 지원 및 위문 활동',
+    cycle: '수시',
+    scope: '교인 경조사(결혼·장례·출산) 현황 파악, 화환·조의금 전달, 위문 방문',
+    manage: '경조사 대장 관리, 지원 결과 보고, 경조 규정 교인 안내',
+    collab: ['친교봉사부'],
+    budget: [{ name:'경조비', amount:'건당 50,000원' }]
+  },
+  '문화사역팀': {
+    title: '문화 행사 기획 및 운영',
+    cycle: '분기',
+    scope: '전도 콘서트·영화 상영·플리마켓 등 문화 프로그램 기획, 홍보물 제작',
+    manage: '행사 진행 매뉴얼 작성, 예산 집행 내역 보고, 참가자 피드백 수집',
+    collab: ['미디어사역팀','방송사역팀'],
+    budget: [{ name:'행사 진행비', amount:'분기 300,000원' }]
+  },
+  '문서사역팀': {
+    title: '주보·공문·교회 문서 제작',
+    cycle: '매주',
+    scope: '주보 레이아웃 편집 및 인쇄, 공지 사항 취합, 공문 작성 및 발송',
+    manage: '문서 파일 버전 관리, 연간 교회 달력 제작, 문서 보관 및 아카이빙',
+    collab: ['예배부','미디어사역팀'],
+    budget: [{ name:'인쇄비', amount:'월 20,000원' }]
+  },
+  '미디어사역팀': {
+    title: '미디어 콘텐츠 제작 및 게시',
+    cycle: '매주',
+    scope: 'SNS 게시물 제작, 예배 영상 편집, 교회 홈페이지·유튜브 업로드',
+    manage: '채널 댓글 모니터링, 콘텐츠 캘린더 관리, 영상 아카이브 관리',
+    collab: ['방송사역팀','문서사역팀'],
+    budget: [{ name:'콘텐츠 제작 도구', amount:'월 15,000원' }]
+  },
+  '방송사역팀': {
+    title: '주일예배 음향·영상 운영',
+    cycle: '매주',
+    scope: '음향 장비 셋업 및 운영, 프로젝터·스크린 출력, 온라인 생중계 송출',
+    manage: '장비 점검 일지, 음향 담당자 주간 순번표, 장비 노후화 현황 보고',
+    collab: ['예배부','미디어사역팀'],
+    budget: [{ name:'장비 소모품', amount:'월 20,000원' }]
+  },
+  '성가대': {
+    title: '주일예배 성가 찬양',
+    cycle: '매주',
+    scope: '주일 예배 찬양 곡 선정 및 연습, 절기 칸타타·특별 찬양 준비',
+    manage: '대원 출석 관리, 악보 배포 및 보관, 반주자 협의 및 일정 조율',
+    collab: ['예배부','찬양팀'],
+    budget: [{ name:'악보 인쇄비', amount:'월 10,000원' }, { name:'의상 관리비', amount:'연간 100,000원' }]
+  },
+  '찬양팀': {
+    title: '예배 찬양 인도',
+    cycle: '매주',
+    scope: '예배 찬양 곡 선정, 주간 연습(목요일), 예배 시 찬양 인도',
+    manage: '팀원 파트 배정, 찬양 리스트 관리, 악기·음향 장비 세팅 점검',
+    collab: ['예배부','방송사역팀'],
+    budget: [{ name:'악기 소모품', amount:'월 20,000원' }]
+  }
+};
+
+// ── 기본업무 카드 렌더 함수 ──────────────────────────────────────────────────
+function render기본업무(dept) {
+  const list = document.querySelector('.work-list');
+  const data = 기본업무맵[dept];
+
+  if (!data) {
+    // 매핑이 없으면 빈 카드로 초기화
+    list.innerHTML = '';
+    workCount = 0;
+    document.querySelector('.add-work').click();
+    return;
+  }
+
+  workCount = 1;
+  const collabTags = data.collab.map(c =>
+    `<span class="tag">${c} <span class="tag-x">✕</span></span>`).join('');
+  const budgetRows = data.budget.map(b => `
+    <div class="budget-row">
+      <input type="text" placeholder="항목명" value="${b.name}">
+      <div class="bdash">—</div>
+      <input type="text" placeholder="금액" value="${b.amount}">
+      <button class="del-btn" onclick="this.closest('.budget-row').remove()">✕</button>
+    </div>`).join('');
+
+  list.innerHTML = `
+    <div class="work-item">
+      <div class="work-head">
+        <span class="work-num">업무 1</span>
+        <span class="work-head-name">${data.title}</span>
+        <span class="work-head-cycle">${data.cycle}</span>
+        <button class="work-del-btn">삭제</button>
+        <span class="work-chevron">▲</span>
+      </div>
+      <div class="work-body">
+        <div class="work-row2">
+          <div class="field">
+            <label>업무 명칭 <span class="req">*</span></label>
+            <input type="text" value="${data.title}">
+          </div>
+          <div class="field">
+            <label>주기 <span class="req">*</span></label>
+            <div class="sel-wrap">
+              <select>
+                <option${data.cycle==='매주'?' selected':''}>매주</option>
+                <option${data.cycle==='매월'?' selected':''}>매월</option>
+                <option${data.cycle==='분기'?' selected':''}>분기</option>
+                <option${data.cycle==='연간'?' selected':''}>연간</option>
+                <option${data.cycle==='수시'?' selected':''}>수시</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>업무 범위 <span class="req">*</span></label>
+          <textarea>${data.scope}</textarea>
+        </div>
+        <div class="field">
+          <label>관리 내용 <span class="req">*</span></label>
+          <textarea>${data.manage}</textarea>
+        </div>
+        <div class="field">
+          <label>협력 부서/팀 <span class="opt">복수 선택</span></label>
+          <div class="tag-field">
+            ${collabTags}
+            <span class="tag-ph">+ 추가</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>필요 예산 <span class="opt">선택</span></label>
+          <div class="budget-rows">${budgetRows}</div>
+          <button class="add-row-btn">＋ 항목 추가</button>
+        </div>
+      </div>
+    </div>`;
+
+  // 이벤트 재연결
+  const item = list.firstElementChild;
+  item.querySelector('.work-head').addEventListener('click', function(e) {
+    if (e.target.classList.contains('work-del-btn')) return;
+    const body = item.querySelector('.work-body');
+    const chevron = this.querySelector('.work-chevron');
+    body.style.display = body.style.display === 'none' ? '' : 'none';
+    chevron.textContent = body.style.display === 'none' ? '▼' : '▲';
+  });
+  item.querySelector('.work-del-btn').addEventListener('click', function() {
+    item.remove(); renumberWork();
+  });
+  const nameInput = item.querySelector('.work-row2 input[type=text]');
+  const headName = item.querySelector('.work-head-name');
+  const cycleSelect = item.querySelector('.work-row2 select');
+  const headCycle = item.querySelector('.work-head-cycle');
+  nameInput.addEventListener('input', function() {
+    headName.textContent = this.value || '업무명을 입력해주세요';
+  });
+  cycleSelect.addEventListener('change', function() {
+    headCycle.textContent = this.value;
+  });
+  item.querySelector('.add-row-btn').addEventListener('click', function() {
+    addBudgetRow(this);
+  });
+  item.querySelectorAll('textarea').forEach(initDefaultTextarea);
+}
+
 document.getElementById('deptSelect').addEventListener('change', function() {
   const roleSelect = document.getElementById('roleSelect');
   const val = this.value;
@@ -883,6 +1102,9 @@ document.getElementById('deptSelect').addEventListener('change', function() {
     o.textContent = r;
     roleSelect.appendChild(o);
   });
+
+  // 기본업무 카드 자동 렌더
+  render기본업무(val);
 });
 
 // ★ Apps Script 웹앱 배포 후 아래 URL을 교체하세요
