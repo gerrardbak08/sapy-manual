@@ -363,6 +363,183 @@ textarea { resize: vertical; min-height: 80px; line-height: 1.65; }
 }
 .submit-btn:active { transform: scale(0.99); }
 
+/* ─── 관리자 진입 버튼 ─── */
+.admin-trigger {
+  background: none; border: none; cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px; font-weight: 500;
+  color: var(--text-4); letter-spacing: 0.02em;
+  padding: 4px 8px; border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+.admin-trigger:hover { color: var(--text-3); background: rgba(0,0,0,0.04); }
+
+/* ─── 비밀번호 오버레이 ─── */
+.pw-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(245,245,247,0.88);
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  display: none; align-items: center; justify-content: center;
+}
+.pw-overlay.open { display: flex; }
+.pw-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 40px 36px 36px;
+  width: 100%; max-width: 340px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12); text-align: center;
+}
+.pw-icon { font-size: 32px; margin-bottom: 14px; }
+.pw-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 19px; font-weight: 700; color: var(--text-1);
+  margin-bottom: 4px;
+}
+.pw-sub { font-size: 13px; color: var(--text-2); margin-bottom: 22px; }
+.pw-input {
+  width: 100%; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  padding: 12px 16px;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 15px; color: var(--text-1);
+  background: var(--bg); outline: none;
+  transition: border-color 0.15s; text-align: center;
+  letter-spacing: 0.1em; margin-bottom: 10px;
+}
+.pw-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,113,227,0.12); }
+.pw-btn {
+  width: 100%; background: var(--navy); color: #fff;
+  font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700;
+  padding: 13px; border: none; border-radius: var(--r-sm);
+  cursor: pointer; transition: opacity 0.15s; letter-spacing: 0.01em;
+}
+.pw-btn:hover { opacity: 0.88; }
+.pw-error { font-size: 13px; color: var(--danger); margin-top: 8px; min-height: 18px; }
+.pw-cancel {
+  background: none; border: none; cursor: pointer;
+  font-size: 13px; color: var(--text-3); margin-top: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* ─── 관리자 패널 ─── */
+#adminPanel { display: none; }
+#adminPanel.open { display: block; }
+
+.admin-page {
+  max-width: 900px; margin: 0 auto; padding: 40px 20px 80px;
+}
+.admin-hero { text-align: center; margin-bottom: 36px; }
+.admin-eyebrow {
+  font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 500;
+  color: var(--text-3); letter-spacing: 0.04em; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.admin-title {
+  font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.03em; margin-bottom: 28px;
+}
+.admin-stats {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 14px;
+  margin-bottom: 36px;
+}
+.astat {
+  background: var(--surface); border: 1px solid var(--border-s);
+  border-radius: var(--r-lg); padding: 22px 16px; text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.astat-num {
+  font-family: 'Outfit', sans-serif; font-size: 42px; font-weight: 800;
+  line-height: 1; margin-bottom: 6px;
+}
+.astat-num.navy { color: var(--navy); }
+.astat-num.green { color: var(--success); }
+.astat-num.orange { color: #FF9500; }
+.astat-label { font-size: 13px; font-weight: 500; color: var(--text-2); }
+
+/* 세그먼트 토글 */
+.seg-wrap { display: flex; justify-content: center; margin-bottom: 28px; }
+.seg {
+  display: inline-flex; background: rgba(0,0,0,0.06);
+  border-radius: 12px; padding: 4px; gap: 2px;
+}
+.seg-btn {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 600;
+  color: var(--text-2); background: none; border: none;
+  border-radius: 9px; padding: 9px 22px; cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+.seg-btn.active {
+  background: var(--surface); color: var(--navy);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.13);
+}
+
+/* 관리자 테이블 */
+.acard {
+  background: var(--surface); border-radius: var(--r-lg);
+  border: 1px solid var(--border-s); overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.acard-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px 16px; border-bottom: 1px solid var(--border-s);
+}
+.acard-title { font-size: 15px; font-weight: 700; color: var(--text-1); font-family: 'Noto Sans KR', sans-serif; }
+.tbl-wrap { overflow-x: auto; }
+table.atbl { width: 100%; border-collapse: collapse; min-width: 560px; }
+table.atbl thead th {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 11px; font-weight: 600;
+  color: var(--text-3); text-align: left;
+  padding: 11px 14px; background: var(--bg);
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+table.atbl tbody tr { border-bottom: 1px solid rgba(210,210,215,0.5); transition: background 0.1s; }
+table.atbl tbody tr:last-child { border-bottom: none; }
+table.atbl tbody tr:hover { background: rgba(245,245,247,0.7); }
+table.atbl tbody td {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 13px;
+  color: var(--text-1); padding: 12px 14px; vertical-align: middle; white-space: nowrap;
+}
+.td-bold { font-weight: 700; }
+.td-gray { color: var(--text-3); }
+.td-num { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600; color: var(--navy); }
+
+/* 뱃지 */
+.badge {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  padding: 3px 10px; border-radius: 100px;
+  font-family: 'Outfit', sans-serif;
+}
+.badge-ok { background: rgba(48,209,88,0.12); color: #1a7d35; }
+.badge-no { background: rgba(110,110,115,0.1); color: var(--text-3); }
+.badge-navy { background: var(--navy); color: #fff; }
+
+/* 제출 카드 그리드 */
+.sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 20px; }
+.sub-card {
+  background: var(--surface); border: 1px solid var(--border-s);
+  border-radius: var(--r-md); padding: 20px;
+}
+.sub-dept { margin-bottom: 8px; }
+.sub-person { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 2px; }
+.sub-role { font-size: 13px; color: var(--text-2); }
+.sub-date { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+.sub-works {
+  list-style: none; margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid var(--border-s); display: flex; flex-direction: column; gap: 8px;
+}
+.sub-work { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.sub-work-name { font-size: 13px; color: var(--text-1); font-weight: 500; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.badge-cycle { background: rgba(0,113,227,0.1); color: var(--accent); font-size: 10px; padding: 2px 8px; border-radius: 100px; font-family: 'Outfit', sans-serif; font-weight: 600; }
+
+.sub-empty {
+  grid-column: 1/-1; text-align: center; padding: 48px 20px;
+  border: 1.5px dashed var(--border); border-radius: var(--r-md);
+}
+.sub-empty-title { font-size: 15px; font-weight: 600; color: var(--text-3); margin-bottom: 6px; }
+.sub-empty-desc { font-size: 13px; color: var(--text-3); line-height: 1.8; }
+
+/* 뷰 패널 */
+.view-panel { display: none; }
+.view-panel.active { display: block; }
+
 /* ─── 모바일 ─── */
 @media (max-width: 540px) {
   .top-bar { padding: 0 16px; }
@@ -381,10 +558,23 @@ textarea { resize: vertical; min-height: 80px; line-height: 1.65; }
 </head>
 <body>
 
+<!-- 비밀번호 오버레이 -->
+<div class="pw-overlay" id="pwOverlay">
+  <div class="pw-box">
+    <div class="pw-icon">🔐</div>
+    <div class="pw-title">관리자 인증</div>
+    <div class="pw-sub">관리자 비밀번호를 입력하세요</div>
+    <input class="pw-input" type="password" id="pwInput" placeholder="비밀번호" autocomplete="current-password">
+    <button class="pw-btn" onclick="checkPw()">확인</button>
+    <div class="pw-error" id="pwError"></div>
+    <button class="pw-cancel" onclick="closePwOverlay()">취소</button>
+  </div>
+</div>
+
 <!-- 상단 바 -->
 <div class="top-bar">
   <div class="top-bar-brand">사랑과평안의교회</div>
-  <div class="top-bar-step">단계 <strong>2</strong> / 3</div>
+  <button class="admin-trigger" id="adminTriggerBtn" onclick="openPwOverlay()">관리</button>
 </div>
 
 <div class="page">
@@ -593,6 +783,74 @@ textarea { resize: vertical; min-height: 80px; line-height: 1.65; }
   </div>
 
 </div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- 관리자 패널 (기본 숨김)                 -->
+<!-- ══════════════════════════════════════ -->
+<div id="adminPanel">
+  <div class="admin-page">
+
+    <div class="admin-hero">
+      <div class="admin-eyebrow">메뉴얼 제정 · 관리자 대시보드</div>
+      <h2 class="admin-title">제출 현황</h2>
+
+      <div class="admin-stats">
+        <div class="astat"><div class="astat-num navy">12</div><div class="astat-label">전체 부서/팀</div></div>
+        <div class="astat"><div class="astat-num green" id="aStatDone">0</div><div class="astat-label">제출 완료</div></div>
+        <div class="astat"><div class="astat-num orange" id="aStatPend">12</div><div class="astat-label">미제출</div></div>
+      </div>
+    </div>
+
+    <!-- 세그먼트 토글 -->
+    <div class="seg-wrap">
+      <div class="seg">
+        <button class="seg-btn active" id="segStatus" onclick="switchAdminView('status')">전체 현황</button>
+        <button class="seg-btn" id="segSubmitter" onclick="switchAdminView('submitter')">제출 담당자</button>
+      </div>
+    </div>
+
+    <!-- 뷰 1: 전체 현황 테이블 -->
+    <div class="view-panel active" id="viewStatus">
+      <div class="acard">
+        <div class="acard-header">
+          <span class="acard-title">부서/팀별 제출 현황</span>
+          <button class="admin-trigger" style="font-size:13px;color:var(--navy);border:1.5px solid var(--navy);padding:6px 14px;border-radius:999px;" onclick="refreshAdmin()">↻ 새로고침</button>
+        </div>
+        <div class="tbl-wrap">
+          <table class="atbl">
+            <thead><tr><th>부서/팀</th><th>제출자</th><th>직분</th><th>제출일시</th><th>업무 수</th><th>상태</th></tr></thead>
+            <tbody id="adminTableBody">
+              <tr><td class="td-bold">친교봉사부</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+              <tr><td class="td-bold">문서사역팀</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+              <tr><td class="td-bold">예배부</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+              <tr><td class="td-bold">재정부</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+              <tr><td class="td-bold">새가족부</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+              <tr><td class="td-bold">교육부</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+              <tr><td class="td-bold">시설관리부</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+              <tr><td class="td-bold">환경미화부</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+              <tr><td class="td-bold">경조사부</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+              <tr><td class="td-bold">문화사역팀</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+              <tr><td class="td-bold">성가대</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+              <tr><td class="td-bold">찬양팀</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td class="td-gray">—</td><td><span class="badge badge-no">미제출</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 뷰 2: 제출 담당자 카드 -->
+    <div class="view-panel" id="viewSubmitter">
+      <div class="sub-grid" id="submitterGrid">
+        <div class="sub-empty">
+          <div class="sub-empty-title">아직 제출된 내역이 없습니다</div>
+          <div class="sub-empty-desc">부서/팀 담당자가 폼을 제출하면 여기에 표시됩니다.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <script>
 let workCount = 1;
 
@@ -724,7 +982,69 @@ document.querySelector('.add-work').addEventListener('click', function() {
   newItem.querySelector('input[type=text]').focus();
 });
 
-// 예산 추가
+// ── 관리자 패널 ──────────────────────────
+function openPwOverlay() {
+  document.getElementById('pwOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('pwInput').focus(), 80);
+}
+function closePwOverlay() {
+  document.getElementById('pwOverlay').classList.remove('open');
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwError').textContent = '';
+}
+function checkPw() {
+  if (document.getElementById('pwInput').value === 'admin123') {
+    closePwOverlay();
+    document.querySelector('.page').style.display = 'none';
+    document.getElementById('adminPanel').classList.add('open');
+    document.getElementById('adminTriggerBtn').textContent = '← 폼으로';
+    document.getElementById('adminTriggerBtn').onclick = closeAdmin;
+  } else {
+    document.getElementById('pwError').textContent = '비밀번호가 올바르지 않습니다.';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+function closeAdmin() {
+  document.getElementById('adminPanel').classList.remove('open');
+  document.querySelector('.page').style.display = '';
+  document.getElementById('adminTriggerBtn').textContent = '관리';
+  document.getElementById('adminTriggerBtn').onclick = openPwOverlay;
+}
+function switchAdminView(view) {
+  document.getElementById('viewStatus').classList.toggle('active', view === 'status');
+  document.getElementById('viewSubmitter').classList.toggle('active', view === 'submitter');
+  document.getElementById('segStatus').classList.toggle('active', view === 'status');
+  document.getElementById('segSubmitter').classList.toggle('active', view === 'submitter');
+}
+function refreshAdmin() { /* Google Sheets 연동 후 구현 */ }
+document.getElementById('pwInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPw();
+  if (e.key === 'Escape') closePwOverlay();
+});
+
+// ── textarea 기본값 클릭 시 초기화 ──────────
+function initDefaultTextarea(ta) {
+  const def = ta.value.trim();
+  if (!def) return;
+  ta.dataset.default = def;
+  ta.style.color = 'var(--text-3)';
+  ta.addEventListener('focus', function() {
+    if (this.value.trim() === this.dataset.default) {
+      this.value = '';
+      this.style.color = 'var(--text-1)';
+    }
+  });
+  ta.addEventListener('blur', function() {
+    if (this.value.trim() === '') {
+      this.value = this.dataset.default;
+      this.style.color = 'var(--text-3)';
+    }
+  });
+}
+document.querySelectorAll('textarea').forEach(initDefaultTextarea);
+
+// ── 예산 추가
 function addBudgetRow(btn) {
   const rows = btn.previousElementSibling;
   const row = document.createElement('div');
