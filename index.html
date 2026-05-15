@@ -738,7 +738,20 @@ table.atbl tbody td {
             </div>
             <div class="field">
               <label>협력 부서/팀 <span class="opt">복수 선택</span></label>
-              <div class="tag-field">
+              <div class="tag-field collab-field">
+                <select class="collab-sel" style="display:none">
+                  <option value="" disabled selected>선택</option>
+                  <optgroup label="부서">
+                    <option>예배부</option><option>재정부</option><option>새가족부</option>
+                    <option>교육부</option><option>친교봉사부</option><option>시설관리부</option>
+                    <option>환경미화부</option><option>경조사부</option>
+                  </optgroup>
+                  <optgroup label="팀">
+                    <option>문화사역팀</option><option>문서사역팀</option>
+                    <option>미디어사역팀</option><option>방송사역팀</option>
+                    <option>성가대</option><option>찬양팀</option>
+                  </optgroup>
+                </select>
                 <span class="tag-ph">+ 추가</span>
               </div>
             </div>
@@ -1032,8 +1045,8 @@ function render기본업무(dept) {
         </div>
         <div class="field">
           <label>협력 부서/팀 <span class="opt">복수 선택</span></label>
-          <div class="sel-wrap">
-            <select>
+          <div class="tag-field collab-field">
+            <select class="collab-sel" style="display:none">
               <option value="" disabled selected>선택</option>
               <optgroup label="부서">
                 <option>예배부</option><option>재정부</option><option>새가족부</option>
@@ -1046,6 +1059,7 @@ function render기본업무(dept) {
                 <option>성가대</option><option>찬양팀</option>
               </optgroup>
             </select>
+            <span class="tag-ph">+ 추가</span>
           </div>
         </div>
         <div class="field">
@@ -1082,6 +1096,7 @@ function render기본업무(dept) {
     addBudgetRow(this);
   });
   item.querySelectorAll('textarea').forEach(initDefaultTextarea);
+  initCollabField(item.querySelector('.collab-field'));
 }
 
 document.getElementById('deptSelect').addEventListener('change', function() {
@@ -1273,8 +1288,8 @@ document.querySelector('.add-work').addEventListener('click', function() {
         </div>
         <div class="field">
           <label>협력 부서/팀 <span class="opt">복수 선택</span></label>
-          <div class="sel-wrap">
-            <select>
+          <div class="tag-field collab-field">
+            <select class="collab-sel" style="display:none">
               <option value="" disabled selected>선택</option>
               <optgroup label="부서">
                 <option>예배부</option><option>재정부</option><option>새가족부</option>
@@ -1287,6 +1302,7 @@ document.querySelector('.add-work').addEventListener('click', function() {
                 <option>성가대</option><option>찬양팀</option>
               </optgroup>
             </select>
+            <span class="tag-ph">+ 추가</span>
           </div>
         </div>
         <div class="field">
@@ -1325,9 +1341,10 @@ document.querySelector('.add-work').addEventListener('click', function() {
     nameEl.textContent = this.value || '업무명을 입력해주세요';
     nameEl.style.color = this.value ? '#fff' : 'rgba(255,255,255,0.4)';
   });
-  newItem.querySelector('select').addEventListener('change', function() {
+  newItem.querySelector('.work-row2 select').addEventListener('change', function() {
     newItem.querySelector('.work-head-cycle').textContent = this.value;
   });
+  initCollabField(newItem.querySelector('.collab-field'));
 
   newItem.querySelector('input[type=text]').focus();
 });
@@ -1394,6 +1411,47 @@ function initDefaultTextarea(ta) {
 }
 document.querySelectorAll('textarea').forEach(initDefaultTextarea);
 
+// ── 협력 부서/팀 태그 멀티셀렉트 ──────────────────────────────────────────────
+function initCollabField(field) {
+  const sel = field.querySelector('.collab-sel');
+  const ph  = field.querySelector('.tag-ph');
+  if (!sel || !ph) return;
+
+  ph.style.cursor = 'pointer';
+
+  ph.addEventListener('click', function() {
+    sel.style.display = '';
+    sel.value = '';
+    sel.focus();
+  });
+
+  sel.addEventListener('change', function() {
+    const val = this.value;
+    if (!val) return;
+    const existing = [...field.querySelectorAll('.tag')].map(t => t.dataset.val);
+    if (!existing.includes(val)) {
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.dataset.val = val;
+      tag.innerHTML = `${val} <span class="tag-x">✕</span>`;
+      tag.querySelector('.tag-x').addEventListener('click', function(e) {
+        e.stopPropagation();
+        tag.remove();
+      });
+      field.insertBefore(tag, sel);
+    }
+    sel.style.display = 'none';
+    sel.value = '';
+  });
+
+  sel.addEventListener('blur', function() {
+    setTimeout(() => { sel.style.display = 'none'; }, 150);
+  });
+}
+
+// 페이지 로드 시 초기 collab 필드 초기화
+document.querySelectorAll('.collab-field').forEach(initCollabField);
+
 // ── 예산 추가
 function addBudgetRow(btn) {
   const rows = btn.previousElementSibling;
@@ -1426,6 +1484,8 @@ document.querySelectorAll('.work-item').forEach(item => {
       headCycle.textContent = this.value;
     });
   }
+  const collabField = item.querySelector('.collab-field');
+  if (collabField) initCollabField(collabField);
 });
 </script>
 </body>
