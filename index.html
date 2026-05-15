@@ -852,6 +852,105 @@ table.atbl tbody td {
 </div>
 
 <script>
+// ★ Apps Script 웹앱 배포 후 아래 URL을 교체하세요
+const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
+
+// ── 제출 처리 ─────────────────────────────
+document.querySelector('.submit-btn').addEventListener('click', async function() {
+  const dept = document.querySelectorAll('.card')[0].querySelectorAll('select')[0].value;
+  const role = document.querySelectorAll('.card')[0].querySelectorAll('select')[1].value;
+  const name = document.querySelectorAll('.card')[0].querySelector('input[type=text]').value;
+
+  if (!dept || !role) {
+    alert('소속 부서/팀과 직분을 선택해 주세요.');
+    return;
+  }
+
+  // 업무 목록 수집
+  const works = [];
+  document.querySelectorAll('.work-item').forEach(item => {
+    const inputs = item.querySelectorAll('input[type=text]');
+    const selects = item.querySelectorAll('select');
+    const textareas = item.querySelectorAll('textarea');
+    const title = inputs[0]?.value?.trim();
+    if (!title) return;
+    works.push({
+      title,
+      cycle:    selects[0]?.value || '',
+      scope:    textareas[0]?.value?.trim() || '',
+      manage:   textareas[1]?.value?.trim() || '',
+      budget:   Array.from(item.querySelectorAll('.budget-row')).map(r => {
+                  const ins = r.querySelectorAll('input');
+                  return ins[0]?.value ? `${ins[0].value} ${ins[1]?.value}` : '';
+                }).filter(Boolean).join(', ')
+    });
+  });
+
+  if (works.length === 0) {
+    alert('업무를 1개 이상 입력해 주세요.');
+    return;
+  }
+
+  const feedback = document.querySelector('.card:last-of-type textarea')?.value?.trim() || '';
+
+  const payload = { dept, role, name, works, feedback };
+
+  // URL 미설정 시 안내
+  if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL') {
+    alert('[개발 중] Apps Script URL이 아직 연결되지 않았습니다.\n\ngoogle-apps-script.gs를 배포한 후 APPS_SCRIPT_URL을 업데이트해 주세요.');
+    return;
+  }
+
+  const btn = this;
+  btn.disabled = true;
+  btn.textContent = '저장 중…';
+
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+    if (json.success) {
+      showSuccess(dept, works.length);
+    } else {
+      throw new Error(json.message);
+    }
+  } catch (err) {
+    alert('저장 중 오류가 발생했습니다: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = '제출하기';
+  }
+});
+
+function showSuccess(dept, count) {
+  document.querySelector('.page').innerHTML = `
+    <div style="text-align:center;padding:80px 20px;">
+      <div style="width:72px;height:72px;border-radius:50%;background:rgba(48,209,88,0.12);
+           display:flex;align-items:center;justify-content:center;margin:0 auto 24px;
+           font-size:32px;color:var(--success);">✓</div>
+      <div style="font-family:'Outfit',sans-serif;font-size:26px;font-weight:700;
+           color:var(--text-1);letter-spacing:-0.04em;margin-bottom:10px;">제출이 완료됐습니다</div>
+      <div style="font-size:15px;color:var(--text-2);line-height:1.65;margin-bottom:24px;">
+        소중한 내용을 보내주셔서 감사합니다.<br>작성하신 업무 현황이 메뉴얼 제정에 활용됩니다.
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(48,209,88,0.1);
+           color:var(--success);border-radius:100px;padding:6px 16px;
+           font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;margin-bottom:28px;">
+        ✓ Google Sheets에 저장됨
+      </div><br>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--bg);
+           border-radius:10px;padding:12px 20px;font-size:13px;color:var(--text-3);margin-bottom:32px;">
+        <span>${dept}</span><span style="color:var(--border)">|</span>
+        <strong style="color:var(--text-1)">업무 ${count}건</strong> 제출 완료
+      </div><br>
+      <button onclick="location.reload()"
+        style="background:var(--navy);color:#fff;border:none;border-radius:980px;
+               padding:13px 28px;font-family:'Outfit',sans-serif;font-size:15px;
+               font-weight:600;cursor:pointer;">다른 부서 제출하기 →</button>
+    </div>`;
+}
+
 let workCount = 1;
 
 // 아코디언 토글
