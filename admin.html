@@ -701,11 +701,11 @@
           <div class="stat-label">전체 부서/팀</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number green">2</div>
+          <div class="stat-number green">0</div>
           <div class="stat-label">제출 완료</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number orange">10</div>
+          <div class="stat-number orange">12</div>
           <div class="stat-label">미제출</div>
         </div>
       </div>
@@ -744,22 +744,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="td-name">친교봉사부</td>
-                <td class="td-sub">홍길동</td>
-                <td class="td-sub">부서장</td>
-                <td class="td-date">2026-05-14 14:23</td>
-                <td class="td-count">3건</td>
-                <td><span class="badge badge-success">제출 완료</span></td>
-              </tr>
-              <tr>
-                <td class="td-name">문서사역팀</td>
-                <td class="td-sub">김철수</td>
-                <td class="td-sub">차장</td>
-                <td class="td-date">2026-05-13 09:11</td>
-                <td class="td-count">2건</td>
-                <td><span class="badge badge-success">제출 완료</span></td>
-              </tr>
+              <tr><td class="td-name">친교봉사부</td><td class="td-empty">—</td><td class="td-empty">—</td><td class="td-empty">—</td><td class="td-empty">—</td><td><span class="badge badge-muted">미제출</span></td></tr>
+              <tr><td class="td-name">문서사역팀</td><td class="td-empty">—</td><td class="td-empty">—</td><td class="td-empty">—</td><td class="td-empty">—</td><td><span class="badge badge-muted">미제출</span></td></tr>
               <tr><td class="td-name">예배부</td><td class="td-empty">—</td><td class="td-empty">—</td><td class="td-empty">—</td><td class="td-empty">—</td><td><span class="badge badge-muted">미제출</span></td></tr>
               <tr><td class="td-name">재정부</td><td class="td-empty">—</td><td class="td-empty">—</td><td class="td-empty">—</td><td class="td-empty">—</td><td><span class="badge badge-muted">미제출</span></td></tr>
               <tr><td class="td-name">새가족부</td><td class="td-empty">—</td><td class="td-empty">—</td><td class="td-empty">—</td><td class="td-empty">—</td><td><span class="badge badge-muted">미제출</span></td></tr>
@@ -782,68 +768,11 @@
     <div class="view-panel" id="viewSubmitter">
       <div class="submission-grid">
 
-        <!-- Card 1: 친교봉사부 -->
-        <div class="submission-card">
-          <div class="submission-card-header">
-            <div class="submission-meta">
-              <div class="submission-dept">
-                <span class="badge badge-navy">친교봉사부</span>
-              </div>
-              <div class="submission-person">홍길동</div>
-              <div class="submission-role">직분: 부서장</div>
-              <div class="submission-date">제출일시: 2026-05-14 14:23</div>
-            </div>
-          </div>
-          <ul class="work-list">
-            <li class="work-item">
-              <span class="work-name">새신자 환영 및 안내 업무</span>
-              <span class="badge badge-cycle">매주</span>
-            </li>
-            <li class="work-item">
-              <span class="work-name">친교 음식 준비 및 배식 관리</span>
-              <span class="badge badge-cycle">매주</span>
-            </li>
-            <li class="work-item">
-              <span class="work-name">부서 월례 봉사 일정 조율</span>
-              <span class="badge badge-cycle">매월</span>
-            </li>
-          </ul>
-          <div class="submission-actions">
-            <button class="btn-outline">문서 업데이트</button>
-          </div>
-        </div>
-
-        <!-- Card 2: 문서사역팀 -->
-        <div class="submission-card">
-          <div class="submission-card-header">
-            <div class="submission-meta">
-              <div class="submission-dept">
-                <span class="badge badge-navy">문서사역팀</span>
-              </div>
-              <div class="submission-person">김철수</div>
-              <div class="submission-role">직분: 차장</div>
-              <div class="submission-date">제출일시: 2026-05-13 09:11</div>
-            </div>
-          </div>
-          <ul class="work-list">
-            <li class="work-item">
-              <span class="work-name">주보 편집 및 인쇄 관리</span>
-              <span class="badge badge-cycle">매주</span>
-            </li>
-            <li class="work-item">
-              <span class="work-name">교회 공문서 작성 및 보관</span>
-              <span class="badge badge-cycle">수시</span>
-            </li>
-          </ul>
-          <div class="submission-actions">
-            <button class="btn-outline">문서 업데이트</button>
-          </div>
-        </div>
-
-        <!-- 미제출 부서 안내 카드 -->
-        <div class="submission-card" style="border-style: dashed; grid-column: 1/-1; text-align:center; padding: 32px 20px; background: transparent;">
+        <!-- 제출 없음 안내 -->
+        <div class="submission-card" style="border-style: dashed; grid-column: 1/-1; text-align:center; padding: 48px 20px; background: transparent;">
+          <div style="font-size:15px; color: var(--text-3); margin-bottom:8px; font-weight:600;">아직 제출된 내역이 없습니다</div>
           <div style="font-size:13px; color: var(--text-3); line-height:1.8;">
-            미제출 부서: 예배부 · 재정부 · 새가족부 · 교육부 · 시설관리부 · 환경미화부 · 경조사부 · 문화사역팀 · 성가대 · 찬양팀
+            부서/팀 담당자가 폼을 제출하면 여기에 표시됩니다.
           </div>
         </div>
 
