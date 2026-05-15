@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E3A8A"/>
+      <stop offset="100%" style="stop-color:#1e5fa8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 배경 -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- 장식 원 -->
+  <circle cx="1050" cy="100" r="200" fill="rgba(255,255,255,0.04)"/>
+  <circle cx="150" cy="530" r="180" fill="rgba(255,255,255,0.04)"/>
+
+  <!-- 상단 칩 -->
+  <rect x="80" y="120" width="280" height="38" rx="19" fill="rgba(255,255,255,0.12)"/>
+  <text x="220" y="144" font-family="sans-serif" font-size="15" fill="rgba(255,255,255,0.8)" text-anchor="middle" letter-spacing="2">사랑과평안의교회</text>
+
+  <!-- 메인 타이틀 -->
+  <text x="80" y="260" font-family="sans-serif" font-size="64" font-weight="700" fill="#ffffff" letter-spacing="-2">메뉴얼 제정</text>
+  <text x="80" y="340" font-family="sans-serif" font-size="64" font-weight="700" fill="#ffffff" letter-spacing="-2">업무 현황 취합</text>
+
+  <!-- 서브텍스트 -->
+  <text x="80" y="400" font-family="sans-serif" font-size="22" fill="rgba(255,255,255,0.65)">부서 및 팀의 업무 범위와 현황을 등록해 주세요</text>
+
+  <!-- 스탯 뱃지들 -->
+  <rect x="80" y="440" width="130" height="52" rx="12" fill="rgba(255,255,255,0.12)"/>
+  <text x="145" y="461" font-family="sans-serif" font-size="13" fill="rgba(255,255,255,0.6)" text-anchor="middle">부서</text>
+  <text x="145" y="484" font-family="sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">8</text>
+
+  <rect x="224" y="440" width="130" height="52" rx="12" fill="rgba(255,255,255,0.12)"/>
+  <text x="289" y="461" font-family="sans-serif" font-size="13" fill="rgba(255,255,255,0.6)" text-anchor="middle">팀</text>
+  <text x="289" y="484" font-family="sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+
+  <rect x="368" y="440" width="200" height="52" rx="12" fill="rgba(48,209,88,0.2)"/>
+  <text x="468" y="461" font-family="sans-serif" font-size="13" fill="rgba(48,209,88,0.9)" text-anchor="middle">Google Sheets 연동</text>
+  <text x="468" y="484" font-family="sans-serif" font-size="16" font-weight="600" fill="#30D158" text-anchor="middle">실시간 저장</text>
+
+  <!-- 우측 카드 일러스트 -->
+  <rect x="780" y="180" width="340" height="280" rx="20" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <rect x="810" y="210" width="200" height="14" rx="7" fill="rgba(255,255,255,0.2)"/>
+  <rect x="810" y="236" width="280" height="10" rx="5" fill="rgba(255,255,255,0.1)"/>
+  <rect x="810" y="256" width="240" height="10" rx="5" fill="rgba(255,255,255,0.1)"/>
+  <rect x="810" y="290" width="280" height="36" rx="8" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <rect x="810" y="340" width="280" height="36" rx="8" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <rect x="810" y="390" width="140" height="36" rx="18" fill="#0071E3"/>
+  <text x="880" y="413" font-family="sans-serif" font-size="14" font-weight="600" fill="#fff" text-anchor="middle">제출하기</text>
+</svg>
