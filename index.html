@@ -11,14 +11,14 @@
 <meta property="og:url" content="https://gerrardbak08.github.io/sapy-manual/">
 <meta property="og:title" content="사랑과평안의교회 부서/팀 업무현황 제출">
 <meta property="og:description" content="각 부서 및 팀의 업무 범위와 현황을 입력해 주시면 메뉴얼 제정에 활용됩니다.">
-<meta property="og:image" content="https://gerrardbak08.github.io/sapy-manual/og-image.svg">
+<meta property="og:image" content="https://gerrardbak08.github.io/sapy-manual/og-image.png">
 <meta property="og:locale" content="ko_KR">
 
 <!-- 카카오톡 / 트위터 -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="사랑과평안의교회 부서/팀 업무현황 제출">
 <meta name="twitter:description" content="각 부서 및 팀의 업무 범위와 현황을 입력해 주시면 메뉴얼 제정에 활용됩니다.">
-<meta name="twitter:image" content="https://gerrardbak08.github.io/sapy-manual/og-image.svg">
+<meta name="twitter:image" content="https://gerrardbak08.github.io/sapy-manual/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -618,6 +618,22 @@ table.atbl tbody td {
     </div>
   </div>
 
+  <!-- 인포그래픽 스탯 바 -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
+    <div style="background:#fff;border:1px solid var(--border-s);border-radius:14px;padding:18px 16px;text-align:center;">
+      <div style="font-family:'Outfit',sans-serif;font-size:32px;font-weight:700;color:var(--navy);letter-spacing:-0.04em;line-height:1;">8</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-weight:500;">부서</div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border-s);border-radius:14px;padding:18px 16px;text-align:center;">
+      <div style="font-family:'Outfit',sans-serif;font-size:32px;font-weight:700;color:var(--navy);letter-spacing:-0.04em;line-height:1;">6</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-weight:500;">팀</div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border-s);border-radius:14px;padding:18px 16px;text-align:center;">
+      <div style="font-family:'Outfit',sans-serif;font-size:32px;font-weight:700;color:var(--accent);letter-spacing:-0.04em;line-height:1;" id="submitCount">0</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-weight:500;">제출 완료</div>
+    </div>
+  </div>
+
   <!-- 기본 정보 카드 -->
   <div class="card">
     <div class="card-header">
@@ -632,7 +648,7 @@ table.atbl tbody td {
         <div class="field">
           <label>소속 부서 / 팀 <span class="req">*</span></label>
           <div class="sel-wrap">
-            <select>
+            <select id="deptSelect">
               <option value="" disabled selected>선택</option>
               <optgroup label="부서">
                 <option>예배부</option>
@@ -658,10 +674,8 @@ table.atbl tbody td {
         <div class="field">
           <label>직분 <span class="req">*</span></label>
           <div class="sel-wrap">
-            <select>
+            <select id="roleSelect">
               <option value="" disabled selected>선택</option>
-              <option>부서장</option>
-              <option>차장</option>
             </select>
           </div>
         </div>
@@ -853,6 +867,19 @@ table.atbl tbody td {
 </div>
 
 <script>
+// 부서/팀 선택 시 직분 동적 변경
+const 부서목록 = ['예배부','재정부','새가족부','교육부','친교봉사부','시설관리부','환경미화부','경조사부'];
+document.getElementById('deptSelect').addEventListener('change', function() {
+  const roleSelect = document.getElementById('roleSelect');
+  const is부서 = 부서목록.includes(this.value);
+  roleSelect.innerHTML = '<option value="" disabled selected>선택</option>';
+  (is부서 ? ['부서장','차장'] : ['팀장','팀원']).forEach(r => {
+    const o = document.createElement('option');
+    o.textContent = r;
+    roleSelect.appendChild(o);
+  });
+});
+
 // ★ Apps Script 웹앱 배포 후 아래 URL을 교체하세요
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbymM0sV1av7ZGquLyEYsmDuY_zWJrXPiVnMmp7V0H1b4eXP4DrBCwgibH_ZwpM0wMUh/exec';
 
