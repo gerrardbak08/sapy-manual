@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사평교회 업무 취합</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #F5F5F7;
+  --surface:  #FFFFFF;
+  --text-1:   #1D1D1F;
+  --text-2:   #515154;
+  --text-3:   #6E6E73;
+  --text-4:   #AEAEB2;
+  --accent:   #0071E3;
+  --accent-h: #0077ED;
+  --border:   #D2D2D7;
+  --border-s: #E8E8ED;
+  --navy:     #1E3A8A;
+  --navy-h:   #254CAD;
+  --danger:   #FF3B30;
+  --success:  #30D158;
+  --r-lg: 18px;
+  --r-md: 12px;
+  --r-sm: 8px;
+}
+
+html { -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: 'Noto Sans KR', 'Outfit', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-1);
+  min-height: 100vh;
+  padding: 0 0 80px;
+}
+
+/* ─── 상단 헤더 ─── */
+.top-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(245,245,247,0.85);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 0 24px;
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.top-bar-brand {
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px; font-weight: 600;
+  color: var(--text-1); letter-spacing: -0.02em;
+}
+.top-bar-step {
+  font-size: 12px; color: var(--text-3);
+  font-family: 'Outfit', sans-serif;
+}
+.top-bar-step strong { color: var(--accent); font-weight: 600; }
+
+/* ─── 페이지 래퍼 ─── */
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 20px 0;
+}
+
+/* ─── 히어로 ─── */
+.hero {
+  text-align: center;
+  padding: 0 0 44px;
+}
+.hero-eyebrow {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px; font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(20px, 3vw, 24px);
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+.hero-desc {
+  font-size: 15px; color: var(--text-2);
+  line-height: 1.65; max-width: 480px; margin: 0 auto 28px;
+}
+
+/* 진행 표시 */
+.progress-track {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; max-width: 320px; margin: 0 auto;
+}
+.prog-step {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; flex: 1;
+}
+.prog-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px; font-weight: 700;
+  border: 1.5px solid var(--border);
+  color: var(--text-4); background: var(--surface);
+  transition: all 0.3s;
+  position: relative; z-index: 1;
+}
+.prog-step.done .prog-dot {
+  background: var(--success); border-color: var(--success);
+  color: #fff; font-size: 14px;
+}
+.prog-step.active .prog-dot {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+  box-shadow: 0 0 0 4px rgba(0,113,227,0.15);
+}
+.prog-label {
+  font-size: 11px; color: var(--text-4);
+  font-family: 'Outfit', sans-serif; font-weight: 500;
+  white-space: nowrap;
+}
+.prog-step.active .prog-label { color: var(--accent); }
+.prog-step.done .prog-label { color: var(--success); }
+.prog-line {
+  flex: 1; height: 1px; background: var(--border-s);
+  margin: 0 4px; margin-bottom: 20px;
+  position: relative; z-index: 0;
+}
+
+/* ─── 섹션 카드 ─── */
+.card {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border-s);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.card-header {
+  padding: 20px 24px 16px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--border-s);
+}
+.card-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700;
+  color: #fff; flex-shrink: 0;
+}
+.card-meta { flex: 1; }
+.card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px; font-weight: 600;
+  color: var(--text-1); letter-spacing: -0.02em;
+}
+.card-sub {
+  font-size: 12px; color: var(--text-3); margin-top: 1px;
+}
+.card-body {
+  padding: 24px;
+  display: grid; gap: 18px;
+}
+
+/* ─── 필드 ─── */
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field.span2 { grid-column: 1 / -1; }
+
+.field > label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px; font-weight: 500;
+  color: var(--text-2); letter-spacing: -0.01em;
+}
+.req { color: var(--accent); margin-left: 1px; }
+.opt {
+  font-size: 11px; color: var(--text-4);
+  font-weight: 400; margin-left: 4px;
+}
+
+input, select, textarea {
+  width: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px; color: var(--text-1);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+  -webkit-appearance: none; appearance: none;
+}
+input::placeholder, textarea::placeholder { color: var(--text-4); font-size: 14px; }
+input:focus, select:focus, textarea:focus {
+  background: var(--surface);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+}
+textarea { resize: vertical; min-height: 80px; line-height: 1.65; }
+.sel-wrap { position: relative; }
+.sel-wrap::after {
+  content: '';
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  width: 0; height: 0;
+  border-left: 4px solid transparent; border-right: 4px solid transparent;
+  border-top: 5px solid var(--text-3);
+  pointer-events: none;
+}
+
+/* ─── 업무 카드 ─── */
+.work-list { display: grid; gap: 10px; }
+
+.work-item {
+  border: 1px solid var(--border-s);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--surface);
+  transition: border-color 0.2s;
+}
+.work-item:has(input:focus), .work-item:has(select:focus), .work-item:has(textarea:focus) {
+  border-color: rgba(0,113,227,0.3);
+}
+
+.work-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 16px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--navy);
+}
+.work-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  border-radius: 6px; padding: 3px 9px;
+  flex-shrink: 0;
+}
+.work-head-name { flex: 1; font-size: 14px; color: #fff; font-weight: 500; }
+.work-head-cycle { font-size: 12px; color: rgba(255,255,255,0.6); flex-shrink: 0; }
+.work-del-btn {
+  font-size: 11px; color: rgba(255,255,255,0.6);
+  cursor: pointer; padding: 4px 6px;
+  border-radius: 4px; transition: all 0.15s; flex-shrink: 0;
+  background: none; border: none; font-family: inherit;
+}
+.work-del-btn:hover { background: rgba(255,59,48,0.25); color: #fff; }
+.work-chevron { color: rgba(255,255,255,0.6); font-size: 11px; flex-shrink: 0; }
+
+.work-body {
+  padding: 20px 16px;
+  display: grid; gap: 14px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+.work-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.work-row2 .field label { font-size: 12px; }
+
+/* 태그 셀렉터 */
+.tag-field {
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  padding: 8px 12px;
+  min-height: 44px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+}
+.tag-field:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,113,227,0.12);
+  background: var(--surface);
+}
+.tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(0,113,227,0.09);
+  color: var(--accent); border-radius: 100px;
+  padding: 3px 10px; font-size: 12px; font-weight: 500;
+}
+.tag-x { font-size: 10px; opacity: 0.6; cursor: pointer; }
+.tag-x:hover { opacity: 1; }
+.tag-ph { font-size: 13px; color: var(--text-4); }
+
+/* 예산 */
+.budget-rows { display: grid; gap: 8px; }
+.budget-row {
+  display: grid; grid-template-columns: 1fr 12px 110px 32px;
+  gap: 6px; align-items: center;
+}
+.bdash { font-size: 12px; color: var(--text-4); text-align: center; }
+.del-btn {
+  width: 32px; height: 32px; border-radius: 8px;
+  border: none; background: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-4); font-size: 14px;
+  transition: all 0.15s;
+}
+.del-btn:hover { background: rgba(255,59,48,0.08); color: var(--danger); }
+.add-row-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  border: none; background: none; cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px; font-weight: 500; color: var(--accent);
+  padding: 4px 0; transition: opacity 0.15s;
+}
+.add-row-btn:hover { opacity: 0.75; }
+
+/* 업무 추가 */
+.add-work {
+  width: 100%; border: 1.5px dashed var(--border);
+  background: transparent; border-radius: var(--r-md);
+  padding: 14px;
+  font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 500;
+  color: var(--text-3); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all 0.2s;
+  margin-top: 4px;
+}
+.add-work:hover {
+  border-color: var(--accent); color: var(--accent);
+  background: rgba(0,113,227,0.04);
+}
+
+/* ─── 제출 ─── */
+.submit-card {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border-s);
+  padding: 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  margin-bottom: 16px;
+}
+.submit-left {}
+.submit-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(48,209,88,0.1); color: var(--success);
+  border-radius: 100px; padding: 4px 12px;
+  font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 600;
+  margin-bottom: 6px;
+}
+.submit-hint { font-size: 13px; color: var(--text-3); }
+
+.submit-btn {
+  flex-shrink: 0;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 980px;
+  padding: 13px 28px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px; font-weight: 600; letter-spacing: -0.01em;
+  cursor: pointer; white-space: nowrap;
+  transition: all 0.2s;
+}
+.submit-btn:hover {
+  background: var(--accent-h);
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(0,113,227,0.3);
+}
+.submit-btn:active { transform: scale(0.99); }
+
+/* ─── 모바일 ─── */
+@media (max-width: 540px) {
+  .top-bar { padding: 0 16px; }
+  .page { padding: 32px 14px 0; }
+  .hero { padding-bottom: 32px; }
+  .hero-title { font-size: 26px; }
+  .card-body { padding: 18px 16px; }
+  .row2 { grid-template-columns: 1fr; }
+  .work-row2 { grid-template-columns: 1fr; }
+  .budget-row { grid-template-columns: 1fr 12px 90px 32px; }
+  .submit-card { flex-direction: column; align-items: stretch; }
+  .submit-btn { text-align: center; }
+  .prog-label { font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 상단 바 -->
+<div class="top-bar">
+  <div class="top-bar-brand">사랑과평안의교회</div>
+  <div class="top-bar-step">단계 <strong>2</strong> / 3</div>
+</div>
+
+<div class="page">
+
+  <!-- 히어로 -->
+  <div class="hero">
+    <div class="hero-eyebrow">사랑과평안의교회 · 메뉴얼 제정 · 업무 현황 취합</div>
+    <h1 class="hero-title">담당 업무를 등록해주세요</h1>
+    <p class="hero-desc" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">부서 및 팀의 업무 범위와 현황을 입력해 주시면 구글 시트에 자동으로 저장됩니다.</p>
+
+    <div class="progress-track">
+      <div class="prog-step done">
+        <div class="prog-dot">✓</div>
+        <div class="prog-label">기본 정보</div>
+      </div>
+      <div class="prog-line"></div>
+      <div class="prog-step active">
+        <div class="prog-dot">2</div>
+        <div class="prog-label">업무 목록</div>
+      </div>
+      <div class="prog-line"></div>
+      <div class="prog-step">
+        <div class="prog-dot">3</div>
+        <div class="prog-label">완료</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 인포그래픽 스탯 바 -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
+    <div style="background:#fff;border:1px solid var(--border-s);border-radius:14px;padding:18px 16px;text-align:center;">
+      <div style="font-family:'Outfit',sans-serif;font-size:32px;font-weight:700;color:var(--navy);letter-spacing:-0.04em;line-height:1;">8</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-weight:500;">부서</div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border-s);border-radius:14px;padding:18px 16px;text-align:center;">
+      <div style="font-family:'Outfit',sans-serif;font-size:32px;font-weight:700;color:var(--navy);letter-spacing:-0.04em;line-height:1;">4</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-weight:500;">팀</div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border-s);border-radius:14px;padding:18px 16px;text-align:center;">
+      <div style="font-family:'Outfit',sans-serif;font-size:32px;font-weight:700;color:var(--accent);letter-spacing:-0.04em;line-height:1;" id="submitCount">0</div>
+      <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-weight:500;">제출 완료</div>
+    </div>
+  </div>
+
+  <!-- 부서/팀 현황 -->
+  <div style="background:#fff;border:1px solid var(--border-s);border-radius:14px;padding:18px 20px;margin-bottom:20px;">
+    <div style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:14px;letter-spacing:-0.01em;">참여 현황</div>
+    <div style="display:flex;flex-wrap:wrap;gap:7px;" id="deptStatus">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--text-3);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--border);display:inline-block;"></span>예배부
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--text-3);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--border);display:inline-block;"></span>재정부
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--text-3);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--border);display:inline-block;"></span>새가족부
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--text-3);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--border);display:inline-block;"></span>교육부
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(48,209,88,0.08);border:1px solid rgba(48,209,88,0.3);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--success);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--success);display:inline-block;"></span>친교봉사부 ✓
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--text-3);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--border);display:inline-block;"></span>시설관리부
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--text-3);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--border);display:inline-block;"></span>환경미화부
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--text-3);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--border);display:inline-block;"></span>경조사부
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--text-3);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--border);display:inline-block;"></span>문화사역팀
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:5px;background:rgba(48,209,88,0.08);border:1px solid rgba(48,209,88,0.3);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--success);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--success);display:inline-block;"></span>문서사역팀 ✓
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--text-3);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--border);display:inline-block;"></span>성가대
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:12px;color:var(--text-3);">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--border);display:inline-block;"></span>찬양팀
+      </span>
+    </div>
+    <!-- 진행률 바 -->
+    <div style="margin-top:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:11px;color:var(--text-4);">전체 진행률</span>
+        <span style="font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;color:var(--accent);">2 / 12</span>
+      </div>
+      <div style="height:4px;background:var(--border-s);border-radius:99px;overflow:hidden;">
+        <div style="height:100%;width:16.7%;background:linear-gradient(90deg,var(--navy),var(--accent));border-radius:99px;transition:width 0.6s ease;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 기본 정보 카드 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">1</div>
+      <div class="card-meta">
+        <div class="card-title">기본 정보</div>
+        <div class="card-sub">소속과 직분을 선택해 주세요</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row2">
+        <div class="field">
+          <label>소속 부서 / 팀 <span class="req">*</span></label>
+          <div class="sel-wrap">
+            <select>
+              <option value="" disabled selected>선택</option>
+              <optgroup label="부서">
+                <option>예배부</option>
+                <option>재정부</option>
+                <option>새가족부</option>
+                <option>교육부</option>
+                <option>친교봉사부</option>
+                <option>시설관리부</option>
+                <option>환경미화부</option>
+                <option>경조사부</option>
+              </optgroup>
+              <optgroup label="팀">
+                <option>문화사역팀</option>
+                <option>문서사역팀</option>
+                <option>성가대</option>
+                <option>찬양팀</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>직분 <span class="req">*</span></label>
+          <div class="sel-wrap">
+            <select>
+              <option value="" disabled selected>선택</option>
+              <option>부서장</option>
+              <option>차장</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>이름 <span class="opt">선택</span></label>
+        <input type="text" placeholder="홍길동">
+      </div>
+    </div>
+  </div>
+
+  <!-- 업무 목록 카드 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">2</div>
+      <div class="card-meta">
+        <div class="card-title">업무 목록</div>
+        <div class="card-sub">업무마다 카드를 추가해 주세요</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="work-list">
+
+        <!-- 업무 1 (펼침) -->
+        <div class="work-item">
+          <div class="work-head">
+            <span class="work-num">업무 1</span>
+            <span class="work-head-name">주일예배 준비</span>
+            <span class="work-head-cycle">매주</span>
+            <button class="work-del-btn">삭제</button>
+            <span class="work-chevron">▲</span>
+          </div>
+          <div class="work-body">
+            <div class="work-row2">
+              <div class="field">
+                <label>업무 명칭 <span class="req">*</span></label>
+                <input type="text" value="주일예배 준비">
+              </div>
+              <div class="field">
+                <label>주기 <span class="req">*</span></label>
+                <div class="sel-wrap">
+                  <select>
+                    <option selected>매주</option>
+                    <option>매월</option>
+                    <option>분기</option>
+                    <option>연간</option>
+                    <option>수시</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label>업무 범위 <span class="req">*</span></label>
+              <textarea>음향·영상 설비 점검, 헌금봉투 준비, 안내위원 배치 및 역할 교육</textarea>
+            </div>
+            <div class="field">
+              <label>관리 내용 <span class="req">*</span></label>
+              <textarea>주보 인쇄 및 배포, 예배 순서 확인, 헌금 집계 및 전달</textarea>
+            </div>
+            <div class="field">
+              <label>협력 부서/팀 <span class="opt">복수 선택</span></label>
+              <div class="tag-field">
+                <span class="tag">문서사역팀 <span class="tag-x">✕</span></span>
+                <span class="tag">찬양팀 <span class="tag-x">✕</span></span>
+                <span class="tag-ph">+ 추가</span>
+              </div>
+            </div>
+            <div class="field">
+              <label>필요 예산 <span class="opt">선택</span></label>
+              <div class="budget-rows">
+                <div class="budget-row">
+                  <input type="text" placeholder="항목명" value="주보 인쇄비">
+                  <div class="bdash">—</div>
+                  <input type="text" placeholder="금액" value="월 15,000원">
+                  <button class="del-btn">✕</button>
+                </div>
+              </div>
+              <button class="add-row-btn">＋ 항목 추가</button>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <button class="add-work">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        업무 추가
+      </button>
+    </div>
+  </div>
+
+  <!-- 공통 사항 카드 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">3</div>
+      <div class="card-meta">
+        <div class="card-title">공통 사항</div>
+        <div class="card-sub">개선 의견이 있으면 남겨주세요</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <label>개선 요청사항 <span class="opt">선택</span></label>
+        <textarea placeholder="현재 업무에서 아쉬운 점, 건의사항을 자유롭게 적어주세요." style="min-height:90px"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제출 -->
+  <div class="submit-card">
+    <div class="submit-left">
+      <div class="submit-badge">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M10 3L5 8.5 2 5.5"/><path d="M10 3L5 8.5 2 5.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Google Sheets 연동
+      </div>
+      <div class="submit-hint">제출하면 시트에 바로 저장됩니다</div>
+    </div>
+    <button class="submit-btn">제출하기</button>
+  </div>
+
+</div>
+<script>
+let workCount = 1;
+
+// 아코디언 토글
+document.querySelectorAll('.work-head').forEach(head => {
+  head.addEventListener('click', function(e) {
+    if (e.target.classList.contains('work-del-btn')) return;
+    const item = this.closest('.work-item');
+    const body = item.querySelector('.work-body');
+    const chevron = this.querySelector('.work-chevron');
+    if (body) {
+      body.style.display = body.style.display === 'none' ? '' : 'none';
+      chevron.textContent = body.style.display === 'none' ? '▼' : '▲';
+    }
+  });
+});
+
+// 삭제 버튼
+document.querySelectorAll('.work-del-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.closest('.work-item').remove();
+    renumberWork();
+  });
+});
+
+function renumberWork() {
+  document.querySelectorAll('.work-num').forEach((el, i) => {
+    el.textContent = '업무 ' + (i + 1);
+  });
+}
+
+// 업무 추가
+document.querySelector('.add-work').addEventListener('click', function() {
+  workCount++;
+  const html = `
+    <div class="work-item">
+      <div class="work-head">
+        <span class="work-num">업무 ${workCount}</span>
+        <span class="work-head-name" style="color:rgba(255,255,255,0.4)">업무명을 입력해주세요</span>
+        <span class="work-head-cycle"></span>
+        <button class="work-del-btn">삭제</button>
+        <span class="work-chevron">▲</span>
+      </div>
+      <div class="work-body">
+        <div class="work-row2">
+          <div class="field">
+            <label>업무 명칭 <span class="req">*</span></label>
+            <input type="text" placeholder="예) 주일예배 준비">
+          </div>
+          <div class="field">
+            <label>주기 <span class="req">*</span></label>
+            <div class="sel-wrap">
+              <select>
+                <option value="" disabled selected>선택</option>
+                <option>매주</option>
+                <option>매월</option>
+                <option>분기</option>
+                <option>연간</option>
+                <option>수시</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>업무 범위 <span class="req">*</span></label>
+          <textarea placeholder="담당하는 업무의 범위를 입력해주세요"></textarea>
+        </div>
+        <div class="field">
+          <label>관리 내용 <span class="req">*</span></label>
+          <textarea placeholder="정기적으로 관리하는 내용을 입력해주세요"></textarea>
+        </div>
+        <div class="field">
+          <label>협력 부서/팀 <span class="opt">복수 선택</span></label>
+          <div class="sel-wrap">
+            <select>
+              <option value="" disabled selected>선택</option>
+              <optgroup label="부서">
+                <option>예배부</option><option>재정부</option><option>새가족부</option>
+                <option>교육부</option><option>친교봉사부</option><option>시설관리부</option>
+                <option>환경미화부</option><option>경조사부</option>
+              </optgroup>
+              <optgroup label="팀">
+                <option>문화사역팀</option><option>문서사역팀</option>
+                <option>성가대</option><option>찬양팀</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>필요 예산 <span class="opt">선택</span></label>
+          <div class="budget-rows">
+            <div class="budget-row">
+              <input type="text" placeholder="항목명">
+              <div class="bdash">—</div>
+              <input type="text" placeholder="금액">
+              <button class="del-btn" onclick="this.closest('.budget-row').remove()">✕</button>
+            </div>
+          </div>
+          <button class="add-row-btn" onclick="addBudgetRow(this)">＋ 항목 추가</button>
+        </div>
+      </div>
+    </div>`;
+
+  const list = document.querySelector('.work-list');
+  list.insertAdjacentHTML('beforeend', html);
+
+  // 새 카드 이벤트 연결
+  const newItem = list.lastElementChild;
+  newItem.querySelector('.work-head').addEventListener('click', function(e) {
+    if (e.target.classList.contains('work-del-btn')) return;
+    const body = newItem.querySelector('.work-body');
+    const chevron = this.querySelector('.work-chevron');
+    body.style.display = body.style.display === 'none' ? '' : 'none';
+    chevron.textContent = body.style.display === 'none' ? '▼' : '▲';
+  });
+  newItem.querySelector('.work-del-btn').addEventListener('click', function() {
+    newItem.remove(); renumberWork();
+  });
+  // 업무명 실시간 반영
+  newItem.querySelector('input[type=text]').addEventListener('input', function() {
+    const nameEl = newItem.querySelector('.work-head-name');
+    nameEl.textContent = this.value || '업무명을 입력해주세요';
+    nameEl.style.color = this.value ? '#fff' : 'rgba(255,255,255,0.4)';
+  });
+  newItem.querySelector('select').addEventListener('change', function() {
+    newItem.querySelector('.work-head-cycle').textContent = this.value;
+  });
+
+  newItem.querySelector('input[type=text]').focus();
+});
+
+// 예산 추가
+function addBudgetRow(btn) {
+  const rows = btn.previousElementSibling;
+  const row = document.createElement('div');
+  row.className = 'budget-row';
+  row.innerHTML = `
+    <input type="text" placeholder="항목명">
+    <div class="bdash">—</div>
+    <input type="text" placeholder="금액">
+    <button class="del-btn" onclick="this.closest('.budget-row').remove()">✕</button>`;
+  rows.appendChild(row);
+}
+
+// 기존 업무 카드 실시간 반영
+document.querySelectorAll('.work-item').forEach(item => {
+  const body = item.querySelector('.work-body');
+  if (!body) return;
+  const nameInput = body.querySelector('.work-row2 input[type=text]');
+  const cycleSelect = body.querySelector('.work-row2 select');
+  const headName = item.querySelector('.work-head-name');
+  const headCycle = item.querySelector('.work-head-cycle');
+
+  if (nameInput) {
+    nameInput.addEventListener('input', function() {
+      headName.textContent = this.value || '업무명을 입력해주세요';
+    });
+  }
+  if (cycleSelect) {
+    cycleSelect.addEventListener('change', function() {
+      headCycle.textContent = this.value;
+    });
+  }
+});
+</script>
+</body>
+</html>

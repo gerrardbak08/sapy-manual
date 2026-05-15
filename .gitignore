@@ -1,0 +1,24 @@
+# 교회 내부 문서 (민감 자료 - 업로드 제외)
+DB/
+
+# 대용량 파일
+files.zip
+files/
+
+# 개발 도구 내부 상태
+.superpowers/
+.omc/
+.playwright-mcp/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# 백업 파일 (자동 생성)
+*_backup_*.docx
+
+# OS
+.DS_Store
+Thumbs.db
