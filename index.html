@@ -869,11 +869,16 @@ table.atbl tbody td {
 <script>
 // 부서/팀 선택 시 직분 동적 변경
 const 부서목록 = ['예배부','재정부','새가족부','교육부','친교봉사부','시설관리부','환경미화부','경조사부'];
+const 직분맵 = { '성가대': ['대장','지휘자','총무'] };
 document.getElementById('deptSelect').addEventListener('change', function() {
   const roleSelect = document.getElementById('roleSelect');
-  const is부서 = 부서목록.includes(this.value);
+  const val = this.value;
+  let options;
+  if (직분맵[val]) options = 직분맵[val];
+  else if (부서목록.includes(val)) options = ['부서장','차장'];
+  else options = ['팀장','팀원'];
   roleSelect.innerHTML = '<option value="" disabled selected>선택</option>';
-  (is부서 ? ['부서장','차장'] : ['팀장','팀원']).forEach(r => {
+  options.forEach(r => {
     const o = document.createElement('option');
     o.textContent = r;
     roleSelect.appendChild(o);
