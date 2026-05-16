@@ -20,7 +20,7 @@
 <meta name="twitter:description" content="각 부서 및 팀의 업무 범위와 현황을 입력해 주시면 메뉴얼 제정에 활용됩니다.">
 <meta name="twitter:image" content="https://gerrardbak08.github.io/sapy-manual/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -67,8 +67,8 @@ body {
 }
 .top-bar-brand {
   font-family: 'Outfit', sans-serif;
-  font-size: 15px; font-weight: 600;
-  color: var(--text-1); letter-spacing: -0.02em;
+  font-size: 15px; font-weight: 800;
+  color: var(--text-1); letter-spacing: -0.04em;
 }
 .top-bar-step {
   font-size: 12px; color: var(--text-3);
@@ -90,23 +90,25 @@ body {
 }
 .hero-eyebrow {
   font-family: 'Outfit', sans-serif;
-  font-size: 13px; font-weight: 500;
+  font-size: 11px; font-weight: 600;
   color: var(--accent);
-  letter-spacing: 0.04em;
-  margin-bottom: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
 }
 .hero-title {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(20px, 3vw, 24px);
-  font-weight: 700;
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 800;
   color: var(--text-1);
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-  margin-bottom: 14px;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin-bottom: 16px;
 }
 .hero-desc {
   font-size: 15px; color: var(--text-2);
-  line-height: 1.65; max-width: 480px; margin: 0 auto 28px;
+  line-height: 1.7; max-width: 480px; margin: 0 auto 28px;
+  font-weight: 400; letter-spacing: -0.01em;
 }
 
 /* 진행 표시 */
@@ -166,17 +168,18 @@ body {
   width: 36px; height: 36px; border-radius: 10px;
   background: var(--navy);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700;
-  color: #fff; flex-shrink: 0;
+  font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 800;
+  color: #fff; flex-shrink: 0; letter-spacing: -0.02em;
 }
 .card-meta { flex: 1; }
 .card-title {
   font-family: 'Outfit', sans-serif;
-  font-size: 17px; font-weight: 600;
-  color: var(--text-1); letter-spacing: -0.02em;
+  font-size: 18px; font-weight: 700;
+  color: var(--text-1); letter-spacing: -0.03em;
 }
 .card-sub {
-  font-size: 12px; color: var(--text-3); margin-top: 1px;
+  font-size: 12px; color: var(--text-3); margin-top: 2px;
+  letter-spacing: 0.01em;
 }
 .card-body {
   padding: 24px;
@@ -191,13 +194,15 @@ body {
 
 .field > label {
   font-family: 'Outfit', sans-serif;
-  font-size: 13px; font-weight: 500;
-  color: var(--text-2); letter-spacing: -0.01em;
+  font-size: 12px; font-weight: 600;
+  color: var(--text-2); letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
-.req { color: var(--accent); margin-left: 1px; }
+.req { color: var(--accent); margin-left: 2px; font-weight: 700; }
 .opt {
-  font-size: 11px; color: var(--text-4);
-  font-weight: 400; margin-left: 4px;
+  font-size: 10px; color: var(--text-4);
+  font-weight: 500; margin-left: 5px;
+  text-transform: none; letter-spacing: 0;
 }
 
 input, select, textarea {
@@ -258,8 +263,8 @@ textarea { resize: vertical; min-height: 80px; line-height: 1.65; }
   border-radius: 6px; padding: 3px 9px;
   flex-shrink: 0;
 }
-.work-head-name { flex: 1; font-size: 14px; color: #fff; font-weight: 500; }
-.work-head-cycle { font-size: 12px; color: rgba(255,255,255,0.6); flex-shrink: 0; }
+.work-head-name { flex: 1; font-size: 15px; color: #fff; font-weight: 600; letter-spacing: -0.02em; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.work-head-cycle { font-size: 11px; color: rgba(255,255,255,0.55); flex-shrink: 0; font-family: 'Outfit', sans-serif; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
 .work-del-btn {
   font-size: 11px; color: rgba(255,255,255,0.6);
   cursor: pointer; padding: 4px 6px;
@@ -365,9 +370,9 @@ textarea { resize: vertical; min-height: 80px; line-height: 1.65; }
   flex-shrink: 0;
   background: var(--accent); color: #fff;
   border: none; border-radius: 980px;
-  padding: 13px 28px;
+  padding: 14px 32px;
   font-family: 'Outfit', sans-serif;
-  font-size: 15px; font-weight: 600; letter-spacing: -0.01em;
+  font-size: 16px; font-weight: 700; letter-spacing: -0.02em;
   cursor: pointer; white-space: nowrap;
   transition: all 0.2s;
 }
@@ -461,13 +466,13 @@ textarea { resize: vertical; min-height: 80px; line-height: 1.65; }
   box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 .astat-num {
-  font-family: 'Outfit', sans-serif; font-size: 42px; font-weight: 800;
-  line-height: 1; margin-bottom: 6px;
+  font-family: 'Outfit', sans-serif; font-size: 48px; font-weight: 900;
+  line-height: 1; margin-bottom: 6px; letter-spacing: -0.05em;
 }
 .astat-num.navy { color: var(--navy); }
 .astat-num.green { color: var(--success); }
 .astat-num.orange { color: #FF9500; }
-.astat-label { font-size: 13px; font-weight: 500; color: var(--text-2); }
+.astat-label { font-size: 11px; font-weight: 600; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
 
 /* 세그먼트 토글 */
 .seg-wrap { display: flex; justify-content: center; margin-bottom: 28px; }
@@ -598,7 +603,7 @@ table.atbl tbody td {
   <div class="hero">
     <div class="hero-eyebrow">사랑과평안의교회 · 메뉴얼 제정 · 업무 현황 취합</div>
     <h1 class="hero-title">담당 업무를 등록해주세요</h1>
-    <p class="hero-desc" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">부서 및 팀의 업무 범위와 현황을 입력해 주시면 구글 시트에 자동으로 저장됩니다.</p>
+    <p class="hero-desc">부서 및 팀의 업무 범위와 현황을 입력해 주시면 구글 시트에 자동으로 저장됩니다.</p>
 
     <div class="progress-track">
       <div class="prog-step done">
