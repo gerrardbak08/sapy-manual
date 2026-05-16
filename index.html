@@ -1440,8 +1440,8 @@ function initCollabField(field) {
       });
       field.insertBefore(tag, sel);
     }
-    sel.style.display = 'none';
-    sel.value = '';
+    sel.selectedIndex = 0; // 선택 초기화, 드롭다운 유지
+    sel.focus();
   });
 
   sel.addEventListener('blur', function() {
