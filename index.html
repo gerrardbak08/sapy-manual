@@ -1335,9 +1335,11 @@ document.querySelector('.submit-btn').addEventListener('click', async function()
     const json = await check.json();
     const saved = json.data?.find(r => r['부서/팀'] === dept);
     showSuccess(dept, works.length, !!saved?.['부서/팀']);
+    animateCount(document.getElementById('submitCount'), (json.data || []).length, 600);
   } catch (err) {
     // GET 확인 실패해도 POST는 전송됐으므로 성공 처리
     showSuccess(dept, works.length, false);
+    refreshSubmitCount();
   }
 });
 
@@ -1618,6 +1620,21 @@ function updateAdminStats(records) {
   animateCount(document.getElementById('aStatDone'), done, 800);
   animateCount(document.getElementById('aStatPend'), pend, 800);
 }
+
+// 메인 폼 제출 완료 카운트 실시간 갱신
+async function refreshSubmitCount() {
+  try {
+    const res = await fetch(APPS_SCRIPT_URL);
+    const json = await res.json();
+    if (json.success) {
+      const count = (json.data || []).length;
+      animateCount(document.getElementById('submitCount'), count, 600);
+    }
+  } catch (e) { /* 조용히 실패 */ }
+}
+// 페이지 로드 시 바로 갱신
+refreshSubmitCount();
+
 document.getElementById('pwInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') checkPw();
   if (e.key === 'Escape') closePwOverlay();
