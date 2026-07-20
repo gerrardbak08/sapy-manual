@@ -1,638 +1,145 @@
-# DESIGN.md — Work Platform
-## 전사 안전보건통합관리 플랫폼 디자인 시스템
+# DESIGN.md — 문서 서식 표준
 
-> AI 코딩 에이전트 전용 기준서.
-> **모든 UI 작업 전 이 파일을 반드시 완독한다. 여기 없는 값은 쓰지 않는다.**
+## 사랑과평안의교회 매뉴얼 .docx 서식 기준서
 
----
-
-## 목차
-
-1. [철학 & 무드](#1-철학--무드)
-2. [스택](#2-스택)
-3. [색상 시스템](#3-색상-시스템)
-4. [타이포그래피](#4-타이포그래피)
-5. [간격](#5-간격)
-6. [레이아웃](#6-레이아웃)
-7. [컴포넌트](#7-컴포넌트)
-8. [깊이 & 그림자](#8-깊이--그림자)
-9. [모션](#9-모션)
-10. [반응형](#10-반응형)
-11. [접근성](#11-접근성)
-12. [다크모드](#12-다크모드)
-13. [안전보건 도메인 패턴](#13-안전보건-도메인-패턴)
-14. [파일 구조](#14-파일-구조)
-15. [에이전트 가이드](#15-에이전트-가이드)
+> 이 파일은 웹 UI 디자인 시스템이 아니라 **문서(.docx) 서식 표준**이다.
+> 모든 부서 매뉴얼은 여기 정의된 구조·토큰을 통일 준수한다.
+> 값을 임의로 바꾸지 않는다. 기준은 기존 원본 매뉴얼(예: 교육부 EDU-201).
 
 ---
 
-## 1. 철학 & 무드
+## 1. 무드 & 원칙
 
-> Work Platform은 현장의 복잡함을 수치로 요약해 관리자에게 **"판단의 여유"** 를 준다.
-> 수많은 숫자 사이에서 중요한 것이 먼저 보이고, 나머지는 배경으로 물러난다.
-
-**무드 키워드:** 정돈된 · 기업적 · 신뢰감 있는 · 데이터 중심 · 명료한 · 절제된
-
-**핵심 판단 기준:** "이 선택이 관리자의 판단을 더 빠르고 정확하게 만드는가?" YES면 채택, NO면 반려.
-
-**금지 형용사:** 귀여운, 장난스러운, 화려한, 혁신적, 예술적, 감성적.
-
-### 레퍼런스 포지셔닝
-
-| 플랫폼 | 빌려올 것 | 버릴 것 |
-|--------|----------|---------|
-| 카카오 Corp | 따뜻함, 둥근 모서리, 여백, 신뢰 | 홍보성 히어로 |
-| 네이버 Corp | 정보밀도, 정돈, 명료, 그리드 | 뉴스 카드 밀집 |
-| Linear | 키보드 속도감, 깔끔한 목록 | 커맨드 팔레트 중심 |
-| AWS Console | gray 배경 + 카드 부각, 그림자 최소 | 구식 폼 UI |
+- **격식 있는 · 신뢰감 있는 · 읽기 쉬운.** 교회 공식 규정 문서.
+- 화려함보다 **명료함**. 장·조 구조로 조항을 빠르게 찾을 수 있어야 한다.
+- 국·영문 병기로 품격을 유지하되, 본문은 실무자가 바로 이해할 한국어.
 
 ---
 
-## 2. 스택
+## 2. 폰트 & 글자 크기
 
 ```
-Framework: Next.js 15 (App Router) + React 19
-Styling:   Tailwind CSS (JIT) + CSS Variables
-UI Lib:    Radix UI
-Font:      Pretendard (sans) + DM Mono (mono)
-Icons:     lucide-react (2D only — 3D 절대 금지)
-Animation: motion/react (framer-motion v11+)
-Theme:     class-based dark mode (.dark on <html>)
+기본 폰트      맑은 고딕 (Malgun Gothic)
+표지 대제목     28pt
+장 제목        16pt
+조 제목·본문    13pt / 12pt
+표·캡션·메타    10~12pt
 ```
 
 ---
 
-## 3. 색상 시스템
+## 3. 색상 토큰 (원본 실사용 팔레트)
 
-### 기반 서피스
+섹션/영역 구분에 아래 색을 사용한다. **임의 hex 추가 금지.**
 
-| 토큰 | Light | Dark | 역할 |
-|------|-------|------|------|
-| `background` | `hsl(210 17% 96%)` | `hsl(222 47% 8%)` | 페이지 배경 |
-| `card` | `hsl(0 0% 100%)` | `hsl(222 47% 11%)` | 카드·패널·모달 서피스 |
-| `foreground` | `hsl(222 47% 11%)` | `hsl(210 40% 98%)` | 주요 텍스트 |
-| `muted-foreground` | `hsl(215 16% 47%)` | `hsl(215 20% 65%)` | 보조 텍스트·레이블 |
-| `border` | `hsl(214 32% 91%)` | `hsl(217 33% 20%)` | 카드·입력란·구분선 |
-| `muted` | `hsl(210 17% 93%)` | `hsl(222 47% 12%)` | 헤더 구분·비활성 배경 |
-
-### 브랜드 프라이머리
-
-| 토큰 | 값 | 역할 |
-|------|-----|------|
-| `primary` | `hsl(221 83% 53%)` | 버튼 CTA, 링크, 포커스 링 |
-| `primary-foreground` | `hsl(210 40% 98%)` | primary 위 텍스트 (`text-white` 금지) |
-
-### 시맨틱 4색 시스템
-
-의미 기반 전용 — 순서·장식 목적 사용 금지. **4색 외(purple/pink/cyan/amber) 추가 금지.**
-
-| 토큰 | 값 | 안전보건 역할 |
-|------|-----|-------------|
-| `danger` | `hsl(0 72% 51%)` | 위험도 70+, 사고, 지연, 실패 |
-| `warning` | `hsl(25 95% 53%)` | 위험도 40-69, 주의, 임박 |
-| `info` | `hsl(217 91% 60%)` | 진행중, 중립 집계, AI 결과 |
-| `success` | `hsl(142 71% 36%)` | 위험도 0-39, 완료, 정상 |
-
-각 색상 변형: `bg-{color}-subtle text-{color}` / `border-{color}-border`
-
-### 사이드바 (라이트/다크 동일 — 항상 어두운 chrome)
-
-| 토큰 | 값 |
-|------|-----|
-| `sidebar` | `hsl(222 47% 8%)` |
-| `sidebar-foreground` | `hsl(210 40% 96%)` |
-| `sidebar-muted-foreground` | `hsl(215 20% 65%)` |
-| `sidebar-accent` | `hsl(221 60% 15%)` |
-| `sidebar-accent-foreground` | `hsl(221 83% 70%)` |
-
-### 외부 서비스 (변경 불가)
-
-```css
---kakao-bg: #FEE500;
---kakao-fg: #3C1E1E;
+```
+잉크(본문)     #1A1A1A       회색(보조)     #555555
+네이비(제목)    #1A3A5C   ← 배경 #EAF1F8 / 테두리 #C0D4EC
+딥그린        #1E5C38   ← 배경 #F0FDF4
+블루          #2E6DA4
+퍼플          #4A1E6E   ← 배경 #F5F0FF
+브라운/포인트   #A04010   ← 배경 #FFF4EE
+흰색          #FFFFFF
 ```
 
-### 컬러 강제 규칙
-
-1. 순위·임의 구분에 색 사용 금지 — 순서 번호로 표현
-2. 한 카드에 의미색 2개 이상 동시 금지 — 더 심각한 쪽 우선
-3. `primary`(브랜드 버튼/링크) ≠ `info`(정보 배지/진행)
-4. 하드코딩 hex 금지 (`#13245A`, `text-[#...]`, `bg-[#...]`)
-5. 색만으로 정보 전달 금지 → **색+아이콘+텍스트 3중 필수**
+색상은 정보 구분 보조 수단이며, 색만으로 의미를 전달하지 않는다(라벨 텍스트 병기).
 
 ---
 
-## 4. 타이포그래피
+## 4. 표지 구조 (문서 첫 페이지)
 
-### 폰트 패밀리
+각 매뉴얼(대표·하위 모두) 첫 페이지는 다음 순서를 고정한다.
 
-| 역할 | 폰트 | 사용처 |
-|------|------|--------|
-| Sans | **Pretendard** | 모든 UI 텍스트 |
-| Mono | **DM Mono** | KPI 숫자, 직원번호, 코드 |
+```
+기독교대한하나님의성회  사랑과평안의교회      ← 교단·교회명
+[부 서 / 팀 명]                          ← 자간 벌림
+[매뉴얼 제목 국문]                        ← 28pt 대제목
+[English Title]
 
-`body` 기본: `letter-spacing: -0.015em` (Pretendard 자간 최적화, 전역 적용)
+┌─ 메타 표 ───────────────────────────┐
+│ 문 서 번 호   [코드]-2NN               │
+│ 상 위 문 서   상위 문서번호·명          │
+│ 관 련 부 서   협력 부서/팀 (구'관련규정')│
+│ 제 정 일 자   20__년  __월  __일        │
+│ 개 정 이 력   —                        │
+└────────────────────────────────────┘
+서울특별시 영등포구 도신로 59  |  담임목사 박상혁  |  www.meslap.com
+```
 
-### UI 텍스트 스케일
-
-| 클래스 | px | line-height | weight | 용도 |
-|--------|----|-------------|--------|------|
-| `text-display-lg` | 30px | 1.1 | 700 | 페이지 h1 |
-| `text-display-md` | 22px | 1.15 | 700 | 섹션 타이틀 |
-| `text-heading-lg` | 18px | 1.3 | 600 | 카드 소제목 |
-| `text-heading-md` | 16px | 1.35 | 600 | 카드 타이틀 |
-| `text-heading-sm` | 14px | 1.4 | 600 | 컴팩트 카드 타이틀 |
-| `text-body` | 13px | 1.55 | 400 | 본문 |
-| `text-body-strong` | 13px | 1.55 | 600 | 강조 본문 |
-| `text-caption` | 11px | 1.4 | 500 | 메타·보조정보·배지 |
-| `text-micro` | 10px | 1.35 | 500 | 최소 라벨·범례 |
-
-### KPI 숫자 스케일 (DM Mono + `tabular-nums` 필수)
-
-| 클래스 | px | 용도 |
-|--------|-----|------|
-| `font-kpi-huge` | 40px | 대시보드 핵심 지표 1개 |
-| `font-kpi-display` | 32px | 카드 내 주요 수치 |
-| `font-kpi-metric` | 24px | 서브 수치·테이블 총합 |
-| `font-kpi-inline` | 16px | 본문 안 수치 |
-
-### 금지
-
-| 금지 | 대체 |
-|------|------|
-| `text-[9px]` | 즉시 삭제 (WCAG 위반) |
-| `text-[10px]` | `text-micro` |
-| `text-[11px]`, `text-[12px]` | `text-caption` |
-| `text-[13px]` | `text-body` |
-| `font-bold` (카드 h2) | `font-semibold` |
+메타표 라벨은 자간을 벌려 표기(`문 서 번 호`). '관련부서'는 협력 부서를 적는다.
 
 ---
 
-## 5. 간격
-
-### 기본 원칙: 8px 그리드
-
-| Tailwind | px | 용도 |
-|----------|----|------|
-| `p-3` / `gap-3` | 12px | 카드 내부·섹션 간 기본 |
-| `p-4` / `gap-4` | 16px | 페이지 패딩 (모바일) |
-| `p-5` / `gap-5` | 20px | 대형 카드, 페이지 패딩 (md+) |
-| `space-y-3` | 12px | 섹션 간 기본 |
-| `space-y-5` | 20px | 섹션 간 넉넉한 간격 |
-
-이 외 숫자(15px, 18px, 22px)는 가장 가까운 기준값으로 교체.
-
----
-
-## 6. 레이아웃
-
-### PageShell 패턴 (모든 platform 라우트 최외곽 필수)
-
-```tsx
-export default function SomePage() {
-  return (
-    <div className="flex flex-col h-full overflow-y-auto overflow-x-hidden bg-background">
-      <Header title="페이지명" />
-      <div className="flex-1 p-4 md:p-5 space-y-3 min-w-0">
-        {/* 콘텐츠 */}
-      </div>
-    </div>
-  );
-}
-// ✗ Fragment(<>) 페이지 루트 금지
-// ✗ 이중 overflow-y-auto 금지 (스크롤 트랩)
-```
-
-### 전체 구조
+## 5. 페이지 머리말·꼬리말 (고정 문자열)
 
 ```
-┌─────────────────────────────────────────┐
-│  Header h-14 (56px)                     │
-├──────────┬──────────────────────────────┤
-│ Sidebar  │  Content Area                │
-│ (dark    │  p-4 (mobile) / p-5 (md+)   │
-│  chrome) │  flex-1 overflow-y-auto      │
-└──────────┴──────────────────────────────┘
-```
-
-### 그리드 패턴
-
-```tsx
-// KPI 4열
-<div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-
-// 대시보드 2열
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
-
-// 2:1 분할
-<div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-  <div className="lg:col-span-2">…</div>
-  <div>…</div>
-</div>
-
-// 섹션 리스트
-<div className="space-y-3">
+머리말(header)   사랑과평안의교회   |   [부서] 매뉴얼  [문서번호 / 문서번호 …]
+꼬리말(footer)   기독교대한하나님의성회  사랑과평안의교회   |   서울시 영등포구 도신로 59   |   www.meslap.com
 ```
 
 ---
 
-## 7. 컴포넌트
-
-### 카드 시스템
+## 6. 본문 구조
 
 ```
-section-card = "rounded-2xl border border-border bg-card"
-kpi-card     = "rounded-2xl p-5 bg-card border border-border"
-
-// 위험도별 강조 카드
-danger:  "rounded-2xl border border-danger/40 bg-danger/5 p-5"
-warning: "rounded-2xl border border-warning/40 bg-warning/5 p-5"
-success: "rounded-2xl border border-success/40 bg-success/5 p-5"
+장   "제 N 장  [국문 제목]  [English Title]"    ← 국·영문 병기 필수, 16pt
+조   "제 N 조 (제목)"                          ← 괄호 안 제목
+항   ① ② ③ 원문자로 항 구분
+표   머리행 = 색 배경(§3 팔레트) + 굵게, 본문행 = 흰 배경
+성구  📖 이모지 + 인용구 + 출처(예: 잠 22:6) — 비전/사명 조항에 사용
 ```
 
-**카드 규칙:**
-- 외곽: 반드시 `rounded-2xl` (`rounded-xl`은 카드 내부 요소에만)
-- 배경: `bg-card` (`bg-background` 카드 서피스 금지)
-- 헤더 구분선: `px-4 py-3 border-b border-border bg-muted/30`
+- 장·조 번호는 **문서 전체 연속**(하위 매뉴얼은 각 문서 내 재시작 가능, 원본 관례 유지).
+- 조 번호 중복·건너뜀 금지.
 
-**카드 내부 표준 구조:**
+---
 
-```tsx
-<div className="rounded-2xl border border-border bg-card p-5">
-  <div className="flex items-center justify-between mb-3">
-    <span className="text-caption font-medium text-muted-foreground">레이블</span>
-    <Icon className="w-4 h-4 text-muted-foreground" />
-  </div>
-  <div className="font-kpi-display font-mono tabular-nums text-foreground">87</div>
-  <div className="mt-1 text-caption text-danger flex items-center gap-1">
-    <ArrowUp className="w-3 h-3" />
-    <span>12 어제보다</span>
-  </div>
-</div>
-```
-
-### 버튼
-
-| 변형 | 클래스 |
-|------|--------|
-| Primary | `bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl` |
-| Secondary | `bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-xl` |
-| Danger | `bg-danger text-danger-foreground hover:bg-danger/90 rounded-xl` |
-| Ghost | `hover:bg-muted text-foreground rounded-xl` |
-| Link | `text-primary hover:underline` |
-
-**크기:**
-
-| 사이즈 | 클래스 |
-|--------|--------|
-| Small | `px-3 py-1.5 text-sm font-medium rounded-xl` |
-| Medium (기본) | `px-4 py-2 text-sm font-medium rounded-xl` |
-| Large | `px-5 py-2.5 text-base font-medium rounded-xl` |
-
-`transition-colors duration-150` 필수 / `text-white` 금지 → `text-primary-foreground`
-
-### 배지·칩
-
-```tsx
-<span className="inline-flex items-center gap-1.5 text-caption font-medium
-  px-1.5 py-0.5 rounded-full bg-{color}-subtle text-{color}">
-  <span className="w-1.5 h-1.5 rounded-full bg-current" />
-  {label}
-</span>
-```
-
-### Status Line (좌측 색상 바)
-
-```tsx
-// ✓ 표준 — 부모에 relative 필수
-<div className="relative pl-4">
-  <span className="absolute inset-y-0 left-0 w-1 rounded-l-2xl bg-danger" />
-</div>
-
-// ✗ 금지: border-l-2, border-l-4, inline dot
-```
-
-### 상태 표현 (색 + 아이콘 + 텍스트 3중 필수)
-
-| 상태 | 색 | 아이콘 | 텍스트 |
-|------|-----|--------|--------|
-| 위험/초과 | `danger` | `AlertTriangle` / `XCircle` | "위험", "지연" |
-| 경고/임박 | `warning` | `Clock` / `AlertCircle` | "주의", "임박" |
-| 진행중 | `info` | `Loader2` / `ArrowRight` | "진행중" |
-| 완료/안전 | `success` | `CheckCircle2` | "완료", "안전" |
-
-### SectionHeader (전체에서 단 하나)
+## 7. 수정 이력 표 (update_manuals.py 자동 삽입)
 
 ```
-경로: src/components/features/dashboard/SectionHeader.tsx
-다른 위치의 SectionHeader 완전 금지
+컬럼      번호 | 수정일 | 수정 조항 | 내용 | 수정자
+머리행    네이비 배경 + 흰 글씨 + 가운데 정렬, 9~10pt
 ```
 
-```tsx
-export function SectionHeader({ title, description, action }: SectionHeaderProps) {
-  return (
-    <div className="flex items-start justify-between mb-4">
-      <div>
-        <h2 className="text-heading-sm font-semibold text-foreground tracking-tight">{title}</h2>
-        {description && <p className="text-caption text-muted-foreground mt-0.5">{description}</p>}
-      </div>
-      {action}
-    </div>
-  );
-}
+`update_manuals.py`가 제출 반영 시 문서 앞부분에 자동 추가/누적한다.
+네이비는 §3의 `#1A3A5C` 계열로 통일한다.
+
+---
+
+## 8. 제정란 (문서 말미 고정)
+
 ```
-
-### 입력·셀렉트
-
-```tsx
-// Input
-"w-full text-sm border border-border rounded-lg bg-card
- px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary
- placeholder:text-muted-foreground transition-colors duration-150"
-
-// Label
-"text-caption font-medium text-muted-foreground mb-1.5 block"
-
-// Error
-"text-caption text-danger mt-1"
-```
-
-### 빈 상태 (Empty State)
-
-```tsx
-// ✗ 금지
-<div>데이터가 없습니다.</div>
-
-// ✓ 올바름 — 아이콘 + 감정적 메시지
-<div className="flex flex-col items-center justify-center py-12 text-center">
-  <div className="text-4xl mb-3">{emoji}</div>
-  <div className="text-heading-sm font-semibold text-foreground mb-1">{title}</div>
-  <div className="text-caption text-muted-foreground">{description}</div>
-</div>
-```
-
-**Work Platform 전용 문구:**
-
-| 상황 | 문구 |
-|------|------|
-| 사고 없음 | 🎉 "오늘은 사고 신고가 없습니다" |
-| 서류 없음 | 📋 "등록된 서류가 없습니다" |
-| 교육 없음 | 📚 "완료된 교육이 없습니다" |
-| 점검 없음 | ✅ "예정된 점검이 없습니다" |
-
-### 로딩 (Skeleton)
-
-```tsx
-const skeleton = "animate-pulse bg-muted rounded-xl"
-
-<div className="rounded-2xl border border-border bg-card p-5 space-y-3">
-  <div className={`h-4 w-24 ${skeleton}`} />
-  <div className={`h-8 w-16 ${skeleton}`} />
-  <div className={`h-3 w-20 ${skeleton}`} />
-</div>
-```
-
-### 사이드바 메뉴
-
-```tsx
-// 그룹 라벨
-"text-micro uppercase tracking-wider text-sidebar-muted-foreground px-3 py-1.5"
-
-// 메뉴 항목
-"text-sm font-medium text-sidebar-foreground hover:bg-muted/10 rounded-lg px-3 py-2 transition-colors duration-150"
-
-// 활성 항목
-"bg-sidebar-accent text-sidebar-accent-foreground"
-```
-
-### AI 분석 결과 블록
-
-```tsx
-<div className="rounded-2xl border border-info/20 bg-info/5 p-4">
-  <div className="flex items-center gap-2 mb-2">
-    <span className="text-info text-base">✦</span>
-    <span className="text-caption font-semibold text-info">AI 분석</span>
-  </div>
-  <p className="text-body text-foreground leading-relaxed">{aiResult}</p>
-</div>
-```
-
-### 위험 알림 Pulse
-
-```tsx
-<span className="relative flex h-2 w-2">
-  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-danger opacity-75" />
-  <span className="relative inline-flex rounded-full h-2 w-2 bg-danger" />
-</span>
+위 매뉴얼을 제정함
+20__년  __월  __일
+담임목사 박상혁 (인)      [부서]장 ___________ (인)
 ```
 
 ---
 
-## 8. 깊이 & 그림자
-
-그림자 최소화. **테두리 위주**로 서피스를 구분한다 (AWS Console 방식).
-
-| 토큰 | 값 | 사용처 |
-|------|-----|--------|
-| `shadow-elev-1` | `0 1px 2px rgb(0 0 0 / 0.06)` | 기본 카드 |
-| `shadow-elev-2` | `0 1px 3px rgb(0 0 0 / 0.08)` | hover·드롭다운 |
-| `shadow-elev-3` | `0 2px 6px rgb(0 0 0 / 0.08)` | 모달·팝오버 |
-
-- 카드 기본: 그림자 없음 + `border border-border`
-- hover: `shadow-elev-2` 선택적 추가
-- 모달/오버레이: `shadow-elev-3`
-- shadow 4종 이상 금지
-
----
-
-## 9. 모션
+## 9. 문서번호 규칙
 
 ```
-모션 허용 상황: 상태 변화 / 등장 / 피드백 — 3가지만
-지속 시간: 200ms 이하 (업무용)
-transition-all 금지 → transition-colors / transition-transform
-bounce, spring 금지
-```
-
-| 상황 | 값 |
-|------|-----|
-| 버튼·인터랙티브 | `transition-colors duration-150` |
-| 카드 hover | `transition-transform duration-150 hover:-translate-y-0.5` |
-| 모달 등장 | opacity 0→1 + translateY 8px→0, 200ms |
-| 페이지 전환 | 없음 또는 100ms 이하 페이드 |
-| KPI 카운트업 | 마운트 시 0→목표값, 800ms ease-out |
-
----
-
-## 10. 반응형
-
-**데스크톱 퍼스트.** 모바일은 기능 보존이 목표.
-
-| 브레이크포인트 | 전략 |
-|--------------|------|
-| `< md` (768px) | 1열, 사이드바 숨김 → 하단 MobileNav |
-| `md` (768px+) | 2열, 사이드바 표시 |
-| `lg` (1024px+) | 여백 확장 (`p-5`) |
-| `xl` (1280px+) | 최대 너비 없음 |
-
-터치 타깃 최소 44×44px 필수.
-
----
-
-## 11. 접근성
-
-- 최소 폰트: `text-micro` (10px) — 9px 미만 즉시 삭제 (WCAG 2.1 AA)
-- 색만으로 정보 전달 금지 → 색+아이콘+텍스트 3중 필수
-- 모든 인터랙티브: `focus-visible:ring-2 focus-visible:ring-primary`
-- 버튼 최소 터치 영역: 44×44px
-- 아이콘: `aria-label` 또는 `aria-hidden="true"`
-
----
-
-## 12. 다크모드
-
-Work Platform은 **다크모드 기본**. 라이트모드 추후 지원.
-**예외:** 지도 화면은 사용자 토글로 다크/라이트 전환 — 의도적 설계, 건드리지 않음.
-
----
-
-## 13. 안전보건 도메인 패턴
-
-### 위험도 색상 (불변)
-
-```
-위험도 70 이상 → danger  (red)
-위험도 40~69   → warning (orange)
-위험도 0~39    → success (green)
-```
-
-```tsx
-function getRiskStyle(score: number) {
-  if (score >= 70) return { token: 'danger',  label: '위험', icon: AlertTriangle }
-  if (score >= 40) return { token: 'warning', label: '주의', icon: AlertCircle }
-  return              { token: 'success', label: '안전', icon: CheckCircle2 }
-}
-```
-
-### 사고 심각도
-
-| 심각도 | 표현 |
-|--------|------|
-| 사망·중상 | Status Line `danger` + 목록 최상단 |
-| 경상 | Status Line `warning` |
-| 아차사고 | Status Line `info` |
-
-### 법정 서류 상태
-
-| 상태 | 표현 |
-|------|------|
-| 유효 | `success` 배지 |
-| 만료 7일 전 | `warning` 배지 + pulse |
-| 만료 | `danger` 배지 |
-| 검토중 | `info` 배지 |
-
-### 교육 이수율
-
-| 범위 | 색상 |
-|------|------|
-| 90% 이상 | `success` |
-| 70~89% | `warning` |
-| 70% 미만 | `danger` |
-
-### 인증 페이지
-
-```tsx
-// ✗ 금지
-"bg-[#13245A]" / "text-amber-400"
-
-// ✓ 올바름
-"bg-primary" / "text-warning"
-
-// 카카오 버튼 (CSS 변수 — 변경 불가)
-style={{ backgroundColor: 'var(--kakao-bg)', color: 'var(--kakao-fg)' }}
+부서 매뉴얼   [코드]-201(대표) / -202 / -203 / -204 …
+공통규정      CPO-0NN(기본법) / CPO-1NN(운영규정) / INDEX(총괄인덱스)
+부속규정      ADM-101 재정관리 · ADM-102 시설자산관리
+코드          WOR FIN NEW EDU FEL FAC ENV CEL / CUL CHO PRS / 문서사역팀(미정)
 ```
 
 ---
 
-## 14. 파일 구조
+## 10. 서식 검증 체크리스트
 
 ```
-src/
-├── app/
-│   ├── (auth)/           → 인증 페이지 (bg-primary 배경)
-│   └── (platform)/       → 메인 앱 (PageShell 필수)
-├── components/
-│   ├── ui/               → 기본 컴포넌트 (Button, Badge, Input…)
-│   ├── features/
-│   │   └── dashboard/
-│   │       └── SectionHeader.tsx  ← 전체에서 유일한 SectionHeader
-│   └── layout/           → Header, Sidebar
-├── lib/
-│   └── api/              → API 함수 전용
-└── styles/
-    └── globals.css       → CSS 변수 전용 (인라인 hex 금지)
+□ 표지 5요소(교회명·부서·국문제목·영문제목·메타표) 있음
+□ 메타표 5행(문서번호/상위문서/관련부서/제정일자/개정이력) 있음
+□ 머리말·꼬리말 고정 문자열 일치
+□ 모든 장 제목 국·영문 병기
+□ 조 번호 연속(중복·누락 없음)
+□ 표 머리행 색 배경 + 굵게
+□ 제정란(담임목사·부서장 서명) 있음
+□ 색상·폰트·크기 §2·§3 토큰 준수, 임의 hex 없음
 ```
 
 ---
 
-## 15. 에이전트 가이드
-
-### 빠른 색상 레퍼런스
-
-```
-배경:        bg-background        카드:    bg-card
-주요 텍스트: text-foreground       보조:    text-muted-foreground
-브랜드:      bg-primary            위험:    text-danger / bg-danger-subtle
-경고:        text-warning          진행중:  text-info / bg-info-subtle
-완료:        text-success          AI 결과: border-info/20 bg-info/5
-```
-
-### 새 페이지 생성 프롬프트
-
-```
-DESIGN.md를 따라 [페이지명] 페이지를 만들어줘.
-- 루트: PageShell div (flex flex-col h-full overflow-y-auto bg-background)
-- 카드: section-card (rounded-2xl border border-border bg-card)
-- 숫자: font-kpi-metric font-mono tabular-nums
-- 상태: 4색 (danger/warning/info/success)
-- 텍스트: 시맨틱 토큰 (text-foreground, text-muted-foreground)
-```
-
-### 새 카드 컴포넌트 생성 프롬프트
-
-```
-DESIGN.md 기준으로 [목적] 카드를 만들어줘.
-- 외곽: rounded-2xl border border-border bg-card
-- 헤더: px-4 py-3 border-b border-border bg-muted/30
-- 제목: text-heading-sm font-semibold text-foreground tracking-tight
-- 수치: font-kpi-metric font-mono tabular-nums
-- 배지: text-caption bg-{color}-subtle text-{color} rounded-full
-```
-
-### UI 감사 프롬프트
-
-```
-DESIGN.md 기준으로 [파일 경로]를 감사해줘.
-위반 항목을 파일명·줄번호·위반내용·수정방법 순서로 보고.
-수정은 내가 확인 후 진행할게.
-```
-
-### 작업 전 체크리스트
-
-```
-□ 컴포넌트가 이미 섹션 7에 정의되어 있는가?
-□ 색상이 시맨틱 토큰으로 표현 가능한가?
-□ 폰트 크기가 스케일 내에 있는가?
-□ 카드 외곽이 rounded-2xl인가?
-□ 버튼 텍스트가 text-primary-foreground인가?
-□ 상태 표현이 색+아이콘+텍스트 3중인가?
-□ PageShell div 최외곽인가?
-□ 이중 스크롤 없는가?
-□ 하드코딩 hex 없는가?
-□ 3D 아이콘 없는가?
-□ 아이콘 겹침 없는가?
-```
-
----
-
-*Work Platform DESIGN.md v2.1 — 2026-05-16*
+*문서 서식 표준 · 사랑과평안의교회 매뉴얼 플랫폼 · 2026-07 재작성*
