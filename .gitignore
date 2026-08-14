@@ -20,3 +20,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 .venv/
+
+# Word 임시 잠금파일
+~$*
